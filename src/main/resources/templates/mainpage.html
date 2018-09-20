@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+main
+
+<h1>Підключення до приладу</h1>
+<h1 id="req"></h1>
+<h1>Температура 17 регістр</h1>
+<h1 id="reg17"></h1>
+<h1>Температура 18 регістр</h1>
+<h1 id="reg18"></h1>
+<h1>Температура 19 регістр</h1>
+<h1 id="reg19"></h1>
+<h1>Температура 20 регістр</h1>
+<h1 id="reg20"></h1>
+<h1>Стан установки</h1>
+<h1 id="hre1"></h1>
+
+
+
+
+
+
+
+<form method="post" id="writeHoldingReg" action="" >
+    <input type="text" name="start" placeholder="start adress" /><br>
+    <input type="text" name="value" placeholder="value" /><br>
+    <input type="button" id="btn" value="Записати" />
+</form>
+
+
+
+<script>
+
+
+
+    $( document ).ready(function() {
+        $("#btn").click(
+            function(){
+                sendAjaxForm( 'writeHoldingReg');
+                return false;
+            }
+        );
+    });
+
+    function sendAjaxForm( writeHoldingReg) {
+        jQuery.ajax({
+            url:     "http://localhost:8080/write/test",
+            type:     "POST",
+            dataType: "html",
+            data: jQuery("#"+writeHoldingReg).serialize()
+
+        });
+    }
+
+
+
+
+
+
+    // $( document ).ready(function() {
+    //     $("#btn").click(
+    //         function(){
+    //             sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');
+    //             return false;
+    //         }
+    //     );
+    // });
+    //
+    // function sendAjaxForm(result_form, ajax_form, url) {
+    //     jQuery.ajax({
+    //         url:     "http://localhost:8080/write/test", //url страницы (action_ajax_form.php)
+    //         type:     "POST", //метод отправки
+    //         dataType: "html", //формат данных
+    //         data: jQuery("#"+ajax_form).serialize(),  // Сеарилизуем объект
+    //         success: function(response) { //Данные отправлены успешно
+    //             result = jQuery.parseJSON(response);
+    //             document.getElementById(result_form).innerHTML = "Имя: "+result[0]+"<br>Телефон: "+result[1];
+    //         },
+    //         error: function(response) { // Данные не отправлены
+    //             document.getElementById(result_form).innerHTML = "Ошибка. Данные не отправленны.";
+    //         }
+    //     });
+    // }
+
+
+
+
+
+
+
+
+
+    setInterval(function reg17() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/reg17",
+            success: function (data) {
+                document.getElementById('reg17').innerText = data;
+            }
+        })
+    }, 1000);
+
+
+
+
+        setInterval(function reg18() {
+
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/reg18",
+                success: function (data) {
+                    document.getElementById('reg18').innerText = data;
+                }
+            })
+        }, 1000);
+    setInterval(function reg19() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/reg19",
+            success: function (data) {
+                document.getElementById('reg19').innerText = data;
+            }
+        })
+    }, 1000);
+    setInterval(function reg20() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/reg20",
+            success: function (data) {
+                document.getElementById('reg20').innerText = data;
+            }
+        })
+    }, 1000);
+    setInterval(function req() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/req",
+            success: function (data) {
+                document.getElementById('req').innerText = data;
+            }
+        })
+    }, 3000);
+    setInterval(function hre1() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/hre1",
+            success: function (data) {
+                document.getElementById('hre1').innerText = data;
+            }
+        })
+    }, 1000);
+</script>
+</body>
+</html>
