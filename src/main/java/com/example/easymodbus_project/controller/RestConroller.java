@@ -1,10 +1,7 @@
-package com.example.easymodbus_project;
+package com.example.easymodbus_project.controller;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.google.gson.Gson;
+import com.example.easymodbus_project.AdressWrite;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 
 @RestController
@@ -33,21 +30,20 @@ public class RestConroller {
 //
 
 
-   @PostMapping("/write/test")
-    public int writeTest(
-            @RequestParam int start,
-            @RequestParam int value
+   @PutMapping("/write/test")
+    public boolean  writeTest(
+            @RequestBody AdressWrite adress
+   )
 
-    ){
-        startAdress = start;
-        valueAdress = value;
-        System.out.println("стартовий адрес запису" +startAdress);
 
-        System.out.println(value);
+    {
+
+        System.out.println(adress.start);
+        System.out.println(adress.value);
 //        ModbusClientConnect modbusClientConnect = new ModbusClientConnect();
-        WriteHoldingRegisters.writeHoldingRegisters(start,value);
-        return start;
-
+        WriteHoldingRegisters.writeHoldingRegisters(adress.start,adress.value);
+//
+        return true;
     }
 
 

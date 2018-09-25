@@ -1,14 +1,13 @@
-package com.example.easymodbus_project;
+package com.example.easymodbus_project.controller;
 
-import de.re.easymodbus.exceptions.ModbusException;
 import de.re.easymodbus.modbusclient.ModbusClient;
 
 import java.io.IOException;
 
 public class ModbusClientConnect{
 
-    public static String ipAdress =  "192.168.0.110";
-    public static int port = 1502;
+    public static String ipAdress =  "192.168.0.103";
+    public static int port = 502;
      static ModbusClient modbusClient;
 
 

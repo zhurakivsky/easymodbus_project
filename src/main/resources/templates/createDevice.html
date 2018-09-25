@@ -8,60 +8,45 @@
 </head>
 <body>
 main
-<button id = "createDevice"><a href="/createDivice">Додати пристрій</a></button>
 
 
+<form action="/addDevice" method="post">
+    <input type="text" id="nameOfDevice" name="name" placeholder="please write name of your new device" /><br>
+    <input type="text" id="ipAdress" name="ipadress" placeholder="please write IP Adress of your device" /><br>
+    <input type="text" id="port" name="port" placeholder="please write port" /><br>
 
-
-
-
-<h5>Підключення до приладу</h5>
-<h5 id="req"></h5>
-<h5>Температура 17 регістр</h5>
-<h5 id="reg17"></h5>
-<h5>Температура 18 регістр</h5>
-<h5 id="reg18"></h5>
-<h5>Температура 19 регістр</h5>
-<h5 id="reg19"></h5>
-<h5>Температура 20 регістр</h5>
-<h5 id="reg20"></h5>
-<h5>Стан установки</h5>
-<h5 id="hre1"></h5>
-
-
-    <input type="text" id="writeHoldingReg1" name="start1" placeholder="start adress" /><br>
-    <input type="text" id="writeHoldingReg2" name="value1" placeholder="value" /><br>
-   <button id = "btn">  записати</button>
+   <button id = "create">  записати</button>
+</form>
 
 <script>
 
 
-   let $btn = $("#btn")
-   $btn.click(function () {
-       let $input1 = $('#writeHoldingReg1');
-       let start = $input1.val();
-       $input1.val('');
-       let $input2 = $('#writeHoldingReg2') ;
-       let value = $input2.val();
-       $input2.val('');
-       console.log(start)
-       console.log(value)
-       let adress = JSON.stringify({start, value})
-       $.ajax({
-           url: 'http://localhost:8080/write/test',
-           type:'PUT',
-           data: adress,
-           contentType:'application/json',
-           error: function(err){
-               console.log(err);
-           },
-           success: function (result) {
-               console.log(result);
-           }
-
-       })
-
-   })
+   // let $btn = $("#btn")
+   // $btn.click(function () {
+   //     let $input1 = $('#writeHoldingReg1');
+   //     let start = $input1.val();
+   //     $input1.val('');
+   //     let $input2 = $('#writeHoldingReg2') ;
+   //     let value = $input2.val();
+   //     $input2.val('');
+   //     console.log(start)
+   //     console.log(value)
+   //     let adress = JSON.stringify({start, value})
+   //     $.ajax({
+   //         url: 'http://localhost:8080/write/test',
+   //         type:'PUT',
+   //         data: adress,
+   //         contentType:'application/json',
+   //         error: function(err){
+   //             console.log(err);
+   //         },
+   //         success: function (result) {
+   //             console.log(result);
+   //         }
+   //
+   //     })
+   //
+   // })
 
 
 

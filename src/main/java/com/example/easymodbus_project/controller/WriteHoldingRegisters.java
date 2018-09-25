@@ -1,4 +1,4 @@
-package com.example.easymodbus_project;
+package com.example.easymodbus_project.controller;
 
 import de.re.easymodbus.exceptions.ModbusException;
 
