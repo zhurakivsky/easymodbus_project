@@ -11,11 +11,11 @@ main
 
 
 <form action="/addDevice" method="post">
-    <input type="text" id="nameOfDevice" name="name" placeholder="please write name of your new device" /><br>
-    <input type="text" id="ipAdress" name="ipadress" placeholder="please write IP Adress of your device" /><br>
-    <input type="text" id="port" name="port" placeholder="please write port" /><br>
+    <input type="text"  name="name" placeholder=" write name of your new device" /><br>
+    <input type="text"  name="ipadress" placeholder=" write IP Adress of your device" /><br>
+    <input type="text"  name="port" placeholder="write port" /><br>
 
-   <button id = "create">  записати</button>
+    <input type="submit">
 </form>
 
 <script>
@@ -51,76 +51,76 @@ main
 
 
 
-    setInterval(function reg17() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/reg17",
-            success: function (data) {
-                document.getElementById('reg17').innerText = data;
-            }
-        })
-    }, 1000);
-
-
-
-
-        setInterval(function reg18() {
-
-
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:8080/reg18",
-                success: function (data) {
-                    document.getElementById('reg18').innerText = data;
-                }
-            })
-        }, 1000);
-    setInterval(function reg19() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/reg19",
-            success: function (data) {
-                document.getElementById('reg19').innerText = data;
-            }
-        })
-    }, 1000);
-    setInterval(function reg20() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/reg20",
-            success: function (data) {
-                document.getElementById('reg20').innerText = data;
-            }
-        })
-    }, 1000);
-    setInterval(function req() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/req",
-            success: function (data) {
-                document.getElementById('req').innerText = data;
-            }
-        })
-    }, 3000);
-    setInterval(function hre1() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/hre1",
-            success: function (data) {
-                document.getElementById('hre1').innerText = data;
-            }
-        })
-    }, 1000);
+    // setInterval(function reg17() {
+    //
+    //
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/reg17",
+    //         success: function (data) {
+    //             document.getElementById('reg17').innerText = data;
+    //         }
+    //     })
+    // }, 1000);
+    //
+    //
+    //
+    //
+    //     setInterval(function reg18() {
+    //
+    //
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "http://localhost:8080/reg18",
+    //             success: function (data) {
+    //                 document.getElementById('reg18').innerText = data;
+    //             }
+    //         })
+    //     }, 1000);
+    // setInterval(function reg19() {
+    //
+    //
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/reg19",
+    //         success: function (data) {
+    //             document.getElementById('reg19').innerText = data;
+    //         }
+    //     })
+    // }, 1000);
+    // setInterval(function reg20() {
+    //
+    //
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/reg20",
+    //         success: function (data) {
+    //             document.getElementById('reg20').innerText = data;
+    //         }
+    //     })
+    // }, 1000);
+    // setInterval(function req() {
+    //
+    //
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/req",
+    //         success: function (data) {
+    //             document.getElementById('req').innerText = data;
+    //         }
+    //     })
+    // }, 3000);
+    // setInterval(function hre1() {
+    //
+    //
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/hre1",
+    //         success: function (data) {
+    //             document.getElementById('hre1').innerText = data;
+    //         }
+    //     })
+    // }, 1000);
 </script>
 </body>
 </html>

@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class ModbusClientConnect{
 
-    public static String ipAdress =  "192.168.0.103";
-    public static int port = 502;
+    public static String ipAdress =  "172.20.10.4";
+    public static int port = 1502;
      static ModbusClient modbusClient;
 
 

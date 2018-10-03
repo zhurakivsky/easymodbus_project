@@ -1,15 +1,20 @@
 package com.example.easymodbus_project.model;
 
 
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
-@ToString
+@ToString (exclude = {"coilsRegistr","digitalRegistr","holdingRegistr", "inputRegistr"})
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+
 
 public class Device {
     @Id
@@ -20,42 +25,34 @@ public class Device {
     private String ipadress;
     private int port;
 
-    public Device(){
-    }
-
-    public Device(String name, String ipadress, int port) {
-        this.name = name;
-        this.ipadress = ipadress;
-        this.port = port;
-    }
-
-    public int getId() {
-        return id;
-    }
 
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "device"
+    )
+    private List<CoilsRegistr> coilsRegistr;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "device"
+    )
+    private List<DigitalRegistr> digitalRegistr;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "device"
+    )
+    private List<HoldingRegistr> holdingRegistr;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "device"
+    )
+    private List<InputRegistr> inputRegistr;
 
-    public String getIpadress() {
-        return ipadress;
-    }
 
-    public void setIpadress(String ipadress) {
-        this.ipadress = ipadress;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
 
 }

@@ -11,7 +11,11 @@ main
 <button id = "createDevice"><a href="/createDivice">Додати пристрій</a></button>
 
 
-
+<ul th:each="device:${devices}">
+    <li >
+        <a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></a>
+    </li>
+</ul>
 
 
 
