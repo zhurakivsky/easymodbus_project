@@ -10,7 +10,6 @@ public class WriteHoldingRegisters {
 
 
     public static void writeHoldingRegisters(int startingAdress, int value){
-        System.out.println("writeHoldingRegisters виконується");
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {

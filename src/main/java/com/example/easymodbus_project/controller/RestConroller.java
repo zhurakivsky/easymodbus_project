@@ -38,8 +38,6 @@ public class RestConroller {
 
     {
 
-        System.out.println(adress.start);
-        System.out.println(adress.value);
 //        ModbusClientConnect modbusClientConnect = new ModbusClientConnect();
         WriteHoldingRegisters.writeHoldingRegisters(adress.start,adress.value);
 //

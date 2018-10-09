@@ -22,7 +22,7 @@ public class ReadInputRegisters {
 
         while (ModbusClientConnect.modbusClient.isConnected()) {
 
-            System.out.println(ModbusClientConnect.modbusClient.isConnected());
+//            System.out.println(ModbusClientConnect.modbusClient.isConnected());
 
 
 
@@ -33,14 +33,11 @@ public class ReadInputRegisters {
                 registres = ModbusClientConnect.modbusClient.ReadInputRegisters(17, 5);
             } catch (ModbusException e) {
                 e.printStackTrace();
-                System.out.println("error1");
             } catch (IOException e) {
 //                e.printStackTrace();
-                System.out.println("error2");
                 try {
                     ModbusClientConnect.modbusClient.Disconnect();
                 } catch (IOException e1) {
-                    System.out.println("error3");
                     e1.printStackTrace();
                 }
                 readInputRegisters();
@@ -48,7 +45,6 @@ public class ReadInputRegisters {
 
             }
 
-            System.out.println("start for");
 
 
             try {
@@ -80,7 +76,6 @@ public class ReadInputRegisters {
                 RestConroller.registr19 = reg19;
                 RestConroller.registr20 = reg20;
                 RestConroller.registr21 = reg21;
-                System.out.println("cykl vykonuetsa");
 
             }
 
@@ -88,7 +83,7 @@ public class ReadInputRegisters {
 
             try {
                 ModbusClientConnect.modbusClient.Disconnect();
-                System.out.println("disconnect");
+//                System.out.println("disconnect");
             } catch (IOException e) {
                 e.printStackTrace();
             }

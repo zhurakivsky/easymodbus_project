@@ -49,15 +49,32 @@ public class MainController {
         return "createDevice";
     }
 
+    @GetMapping("/device/del/{id}")
+    public String deleteDevice(
+            @PathVariable int id
+    ){
+        deviceService.delete(id);
+        return "redirect:/";
+    }
+//    @GetMapping("/device/editName/{id}")
+//    public String editName(
+//            @PathVariable int id
+//    ){
+//        deviceService.findById(id);
+//        return "redirect:/";
+//    }
+
     @PostMapping("/addDevice")
     public String addDevice(
             @RequestParam String name,
             @RequestParam String ipadress,
             @RequestParam int port
     ){
-        Device device = new Device();
-        device.builder().ipadress(ipadress).name(name).port(port).build();
-        System.out.println(device);
+
+        System.out.println(name);
+        Device device = Device.builder().ipadress(ipadress).name(name).port(port).build();;
+
+        System.out.println(device.getName());
         deviceService.save(device);
         return "redirect:/";
 

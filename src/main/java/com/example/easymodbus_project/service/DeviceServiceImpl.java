@@ -12,6 +12,8 @@ import java.util.List;
 @Transactional
 public class DeviceServiceImpl implements DeviceService {
 
+
+
     @Autowired
     DeviceDao deviceDao;
 
@@ -31,5 +33,10 @@ public class DeviceServiceImpl implements DeviceService {
 
         deviceDao.save(device);
 
+    }
+
+    @Override
+    public void delete(int id) {
+        deviceDao.deleteById(id);
     }
 }

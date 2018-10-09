@@ -17,7 +17,7 @@ public class ReadHoldingRegisters {
             e.printStackTrace();
         }
         while (ModbusClientConnect.modbusClient.isConnected()) {
-            System.out.println("зчитування ходінг регістрів   "+ModbusClientConnect.modbusClient.isConnected());
+//            System.out.println("зчитування ходінг регістрів   "+ModbusClientConnect.modbusClient.isConnected());
             try {
                 holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(1, 1);
             } catch (ModbusException e) {
@@ -58,7 +58,7 @@ public class ReadHoldingRegisters {
 //
             try {
                 ModbusClientConnect.modbusClient.Disconnect();
-                System.out.println("disconnect");
+//                System.out.println("disconnect");
             } catch (IOException e) {
                 e.printStackTrace();
             }

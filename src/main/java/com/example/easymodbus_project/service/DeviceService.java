@@ -9,6 +9,7 @@ public interface DeviceService {
      Device findById(int id);
      List<Device> findAll();
      void save(Device device);
+     void delete(int id);
 
 
 }

@@ -8,11 +8,27 @@
 <body>
 
 <h1 th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></h1>
-<form action="/addDevice" method="post">
-    <input type="text"  name="adress" placeholder="Input" /><br>
+<a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a><br>
+<button onclick="edit()">  Перейменувати </button>
+<br>
+<a th:href="'/device/editIpAdress/'+ ${device.id}"><button>  Змінити IP адресу </button></a><br>
+<a th:href="'/device/editPort/'+ ${device.id}"><button>  Змінити порт </button></a><br>
 
-    <input type="submit">
-</form>
+
+<!--<form action="/addDevice" method="post">-->
+    <!--<input type="text"  name="adress" placeholder="Input" /><br>-->
+
+    <!--<input type="submit">-->
+<!--</form>-->
+<script>
+    function edit() {
+            var input = document.createElement("INPUT");
+            input.setAttribute("type", "text");
+            document.body.appendChild(input);
+    }
+
+</script>
+
 
 </body>
 </html>
