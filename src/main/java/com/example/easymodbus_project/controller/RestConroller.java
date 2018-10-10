@@ -2,6 +2,7 @@ package com.example.easymodbus_project.controller;
 
 import com.example.easymodbus_project.AdressWrite;
 import org.springframework.web.bind.annotation.*;
+import de.re.easymodbus.modbusclient.ModbusClient;
 
 
 @RestController

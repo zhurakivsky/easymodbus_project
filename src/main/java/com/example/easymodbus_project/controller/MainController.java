@@ -22,7 +22,9 @@ public class MainController {
     public String mainpage (
             Model model
     ){
+
         List<Device> devices = deviceService.findAll();
+
         model.addAttribute("devices", devices);
 
         return "mainpage";

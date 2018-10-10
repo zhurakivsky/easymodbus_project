@@ -9,10 +9,10 @@
 
 <h1 th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></h1>
 <a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a><br>
-<button onclick="edit()">  Перейменувати </button>
-<br>
-<a th:href="'/device/editIpAdress/'+ ${device.id}"><button>  Змінити IP адресу </button></a><br>
-<a th:href="'/device/editPort/'+ ${device.id}"><button>  Змінити порт </button></a><br>
+<button onclick="edit()">  Rename </button><br>
+<button onclick="edit()">  Change IP Address </button><br>
+<button onclick="edit()">  Change Port  </button><br>
+
 
 
 <!--<form action="/addDevice" method="post">-->
