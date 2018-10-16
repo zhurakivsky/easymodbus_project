@@ -8,16 +8,18 @@
 <body style="text-align: center">
 
 <h1 th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></h1>
+<div  >
 <a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a>
 <button onclick="edit('rename')" >  Rename </button>
 <button onclick="edit('ip')" >  Change IP Address </button>
 <button onclick="edit('port')" >  Change Port  </button><br>
-
+</div>
 
 
 
 <script>
     function edit(idOfButton) {
+
         if(document.getElementById("rename")==null
             && document.getElementById("ip")==null
             && document.getElementById("port")==null) {
@@ -27,11 +29,23 @@
                 input.setAttribute("placeholder", idOfButton);
                 var inputSubmit = document.createElement("input");
                 inputSubmit.setAttribute("type", "submit");
-                inputSubmit.setAttribute("id", idOfButton);
-                var button = document.getElementById(idOfButton);
+                inputSubmit.setAttribute("id", idOfButton+"btn");
                 document.body.appendChild(input);
                 document.body.appendChild(inputSubmit);
-            }
+            }else if(document.getElementById("rename")!=null){
+            document.getElementById("rename").remove();
+            document.getElementById("renamebtn").remove();
+            edit(idOfButton);
+        }else if(document.getElementById("ip")!=null){
+            document.getElementById("ip").remove();
+            document.getElementById("ipbtn").remove();
+            edit(idOfButton);
+
+        }else if(document.getElementById("port")!=null){
+            document.getElementById("port").remove();
+            document.getElementById("portbtn").remove();
+            edit(idOfButton);
+        }
     }
 
 </script>
