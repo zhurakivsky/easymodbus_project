@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
 
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body style="text-align: center">
 
@@ -17,7 +18,7 @@
 
 
 
-<script>
+<script th:inline="javascript">
     function edit(idOfButton) {
 
         if(document.getElementById("rename")==null
@@ -46,7 +47,45 @@
             document.getElementById("portbtn").remove();
             edit(idOfButton);
         }
+        let $idOfButton = $('#'+idOfButton+'btn');
+        $idOfButton.click(function () {
+            if(idOfButton =="rename") {
+                let $name = $('#' + idOfButton);
+                let name = $name.val();
+                $name.val('');
+
+
+                console.log(name);
+                console.log(idOfButton);
+
+
+                let id = [[${device.id}]];
+                //
+                //
+                console.log(id);
+                // console.log(name)
+                let deviceData = JSON.stringify({id, name})
+                $.ajax({
+                    url: 'http://localhost:8080/setName',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    // error: function (err) {
+                    //     console.log(err);
+                    // },
+                    // success: function (result) {
+                    //     console.log(result)
+                    // }
+
+
+                })
+                console.log(deviceData);
+
+            }
+        })
+
     }
+
 
 </script>
 

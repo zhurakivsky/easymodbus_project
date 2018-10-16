@@ -5,12 +5,10 @@ import com.example.easymodbus_project.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -79,6 +77,24 @@ public class MainController {
         System.out.println(device.getName());
         deviceService.save(device);
         return "redirect:/";
+
+    }
+    @PostMapping("/setName")
+    public String   setName(
+            @RequestBody Device device
+    )
+
+
+
+    {
+        Device deviceServiceById = deviceService.findById(device.getId());
+        deviceServiceById.setName(device.getName());
+
+        deviceService.save(deviceServiceById);
+        System.out.println(deviceServiceById);
+        return "redirect:/";
+
+
 
     }
 

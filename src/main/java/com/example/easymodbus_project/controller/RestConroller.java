@@ -1,6 +1,9 @@
 package com.example.easymodbus_project.controller;
 
 import com.example.easymodbus_project.AdressWrite;
+import com.example.easymodbus_project.model.Device;
+import com.example.easymodbus_project.service.DeviceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import de.re.easymodbus.modbusclient.ModbusClient;
 
@@ -22,13 +25,15 @@ public class RestConroller {
 
 
 
-
+    @Autowired
+    DeviceService deviceService;
 
 
 
 
 //    ModbusClientConnect modbusClientConnect = new ModbusClientConnect("192.168.0.110", 1502);
 //
+
 
 
    @PutMapping("/write/test")
@@ -116,5 +121,6 @@ public int myModbusConnect17(){
 //                modbusClientConnect4.reg20;
         registr20;
     }
+
 
 }
