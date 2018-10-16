@@ -49,7 +49,7 @@ public class ReadHoldingRegisters {
                 }
                 readHoldingRegisters();
             }
-
+            System.out.println(ModbusClientConnect.modbusClient.isConnected());
             for (int j = 0; j < holdRegisters.length; j++) {
                 RestConroller.holdingregistr1 = holdRegisters[j];
                 System.out.println(holdRegisters[j]);

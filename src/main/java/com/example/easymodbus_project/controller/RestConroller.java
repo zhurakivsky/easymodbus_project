@@ -64,7 +64,7 @@ public class RestConroller {
         ReadHoldingRegisters.readHoldingRegisters();
 
 
-//        System.out.println(modbusClientConnect.modbusClient.isConnected());
+//        System.out.println(modbusClientConnect.isconnect);
 
         return modbusClientConnect.isconnect;
 //

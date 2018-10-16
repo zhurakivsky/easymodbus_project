@@ -5,26 +5,33 @@
 
     <title>Title</title>
 </head>
-<body>
+<body style="text-align: center">
 
 <h1 th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></h1>
-<a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a><br>
-<button onclick="edit()">  Rename </button><br>
-<button onclick="edit()">  Change IP Address </button><br>
-<button onclick="edit()">  Change Port  </button><br>
+<a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a>
+<button onclick="edit('rename')" >  Rename </button>
+<button onclick="edit('ip')" >  Change IP Address </button>
+<button onclick="edit('port')" >  Change Port  </button><br>
 
 
 
-<!--<form action="/addDevice" method="post">-->
-    <!--<input type="text"  name="adress" placeholder="Input" /><br>-->
 
-    <!--<input type="submit">-->
-<!--</form>-->
 <script>
-    function edit() {
-            var input = document.createElement("INPUT");
-            input.setAttribute("type", "text");
-            document.body.appendChild(input);
+    function edit(idOfButton) {
+        if(document.getElementById("rename")==null
+            && document.getElementById("ip")==null
+            && document.getElementById("port")==null) {
+                var input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("id", idOfButton);
+                input.setAttribute("placeholder", idOfButton);
+                var inputSubmit = document.createElement("input");
+                inputSubmit.setAttribute("type", "submit");
+                inputSubmit.setAttribute("id", idOfButton);
+                var button = document.getElementById(idOfButton);
+                document.body.appendChild(input);
+                document.body.appendChild(inputSubmit);
+            }
     }
 
 </script>
