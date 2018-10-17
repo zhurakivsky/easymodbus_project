@@ -4,25 +4,22 @@ package com.example.easymodbus_project.model;
 import lombok.*;
 
 import javax.persistence.*;
-
-
 @Getter
 @Setter
 @EqualsAndHashCode
 @Entity
-@ToString(exclude = "device")
+@ToString (exclude = "device")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
-
-public class CoilsRegistr {
+public class HoldingRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
-    private int adress;
-    private boolean value;
+    private int address;
+    private int value;
 
     @ManyToOne(
             cascade = CascadeType.ALL,

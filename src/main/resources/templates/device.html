@@ -4,18 +4,71 @@
     <meta charset="UTF-8">
 
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body style="text-align: center">
+<body>
+<div>
+    <a th:href="'/'"><button>  На головну </button></a>
+</div>
+<div style="text-align: center">
 
-<h1 th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></h1>
-<div  >
+<h1 th:href="'/device/'+ ${device.id}" th:text="${device.name}" ></h1>
+<h2 th:href="'/device/'+ ${device.id}" th:text="'ipAddress = ' + ${device.ipAddress}" ></h2>
+<h2 th:href="'/device/'+ ${device.id}" th:text="'port = '+ ${device.port} " ></h2>
+<div id="editDevice" >
 <a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a>
 <button onclick="edit('rename')" >  Rename </button>
 <button onclick="edit('ip')" >  Change IP Address </button>
 <button onclick="edit('port')" >  Change Port  </button><br>
 </div>
+</div>
 
+<div style="text-align: center">
+    <ul th:each="holdingRegister:${holdingRegisters}">
+        <li >
+            <a th:href="'/registers/'+ ${holdingRegister.id}" th:text="${holdingRegister.address} + ':' + ${holdingRegister.value}" ></a>
+        </li>
+    </ul>
+    <button id = "createHoldingRegister">   Додайте адрес Holding регістра
+    </button>
+    <br>
+    <ul th:each="inputRegister:${inputRegisters}">
+        <li >
+            <a th:href="'/registers/'+ ${inputRegister.id}" th:text="${inputRegister.address} + ':' + ${inputRegister.value}" ></a>
+        </li>
+    </ul>
+    <button id = "createInputRegister">    Додайте адрес Input регістра
+    </button>
+    <br>
+    <ul th:each="discreteRegister:${discreteRegisters}">
+        <li >
+            <a th:href="'/registers/'+ ${discreteRegister.id}" th:text="${discreteRegister.address} + ':' + ${discreteRegister.value}" ></a>
+        </li>
+    </ul>
+    <button id = "createDiscreteRegister">    Додайте адрес Discrete регістра
+    </button>
+    <br>
+    <ul th:each="coilsRegister:${coilsRegisters}">
+        <li >
+            <a th:href="'/registers/'+ ${coilsRegister.id}" th:text="${coilsRegister.address} + ':' + ${coilsRegister.value}" ></a>
+        </li>
+    </ul>
+    <button id = "createCoilsRegister">Додайте адрес Coil регістра</button>
+
+
+
+
+
+    <ul th:each="device:${devices}">
+        <li >
+            <a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>
+        </li>
+    </ul>
+
+
+</div>
 
 
 <script th:inline="javascript">
@@ -31,8 +84,8 @@
                 var inputSubmit = document.createElement("input");
                 inputSubmit.setAttribute("type", "submit");
                 inputSubmit.setAttribute("id", idOfButton+"btn");
-                document.body.appendChild(input);
-                document.body.appendChild(inputSubmit);
+                document.getElementById("editDevice").appendChild(input);
+                document.getElementById("editDevice").appendChild(inputSubmit);
             }else if(document.getElementById("rename")!=null){
             document.getElementById("rename").remove();
             document.getElementById("renamebtn").remove();
@@ -49,37 +102,65 @@
         }
         let $idOfButton = $('#'+idOfButton+'btn');
         $idOfButton.click(function () {
+            let id = [[${device.id}]];
+            let deviceData;
             if(idOfButton =="rename") {
                 let $name = $('#' + idOfButton);
                 let name = $name.val();
                 $name.val('');
 
-
-                console.log(name);
-                console.log(idOfButton);
-
-
-                let id = [[${device.id}]];
-                //
-                //
-                console.log(id);
-                // console.log(name)
-                let deviceData = JSON.stringify({id, name})
+                deviceData = JSON.stringify({id, name})
                 $.ajax({
                     url: 'http://localhost:8080/setName',
                     type: 'POST',
                     data: deviceData,
                     contentType: 'application/json',
-                    // error: function (err) {
-                    //     console.log(err);
-                    // },
                     success: function () {
-                        location.reload();
+                        document.location.reload(true);
+                    }})
+            }
+            else if(idOfButton =="ip") {
+                let $name = $('#' + idOfButton);
+                let ipAddress = $name.val();
+                $name.val('');
+
+                deviceData = JSON.stringify({id, ipAddress})
+                $.ajax({
+                    url: 'http://localhost:8080/setIpAddress',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    success: function () {
+                        document.location.reload(true);
                     }
 
 
+
+
+
                 })
-                console.log(deviceData);
+
+            }
+            else if(idOfButton =="port") {
+                let $name = $('#' + idOfButton);
+                let port = $name.val();
+                $name.val('');
+
+                deviceData = JSON.stringify({id, port})
+                $.ajax({
+                    url: 'http://localhost:8080/setPort',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    success: function () {
+                        document.location.reload(true);
+                    }
+
+
+
+
+
+                })
 
             }
         })

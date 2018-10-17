@@ -21,7 +21,7 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String ipadress;
+    private String ipAddress;
     private int port;
 
 
@@ -32,25 +32,25 @@ public class Device {
             cascade = CascadeType.ALL,
             mappedBy = "device"
     )
-    private List<CoilsRegistr> coilsRegistr;
+    private List<CoilsRegister> coilsRegisters;
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "device"
     )
-    private List<DigitalRegistr> digitalRegistr;
+    private List<DiscreteRegister> discreteRegisters;
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "device"
     )
-    private List<HoldingRegistr> holdingRegistr;
+    private List<HoldingRegister> holdingRegisters;
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "device"
     )
-    private List<InputRegistr> inputRegistr;
+    private List<InputRegister> inputRegisters;
 
 
 

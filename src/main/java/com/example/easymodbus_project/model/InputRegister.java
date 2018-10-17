@@ -13,21 +13,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class DigitalRegistr {
+
+public class InputRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
-    private int adress;
-    private boolean value;
+    private int address;
+    private int value;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private Device device;
-
-
 
 
 

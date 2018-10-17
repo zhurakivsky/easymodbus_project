@@ -13,19 +13,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class HoldingRegistr {
+public class DiscreteRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
-    private int adress;
-    private int value;
+    private int address;
+    private boolean value;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private Device device;
+
 
 
 

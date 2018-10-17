@@ -72,7 +72,7 @@ public class MainController {
     ){
 
         System.out.println(name);
-        Device device = Device.builder().ipadress(ipadress).name(name).port(port).build();;
+        Device device = Device.builder().ipAddress(ipadress).name(name).port(port).build();;
 
         System.out.println(device.getName());
         deviceService.save(device);
@@ -91,9 +91,44 @@ public class MainController {
         deviceServiceById.setName(device.getName());
 
         deviceService.save(deviceServiceById);
-        System.out.println(deviceServiceById);
+
         return "redirect:/";
 
+
+    }
+
+    @PostMapping("/setIpAddress")
+    public String   setIp(
+            @RequestBody Device device
+    )
+
+
+
+    {
+        Device deviceServiceById = deviceService.findById(device.getId());
+        deviceServiceById.setIpAddress(device.getIpAddress());
+
+        deviceService.save(deviceServiceById);
+
+        return "redirect:/";
+
+
+    }
+
+    @PostMapping("/setPort")
+    public String   setPort(
+            @RequestBody Device device
+    )
+
+
+
+    {
+        Device deviceServiceById = deviceService.findById(device.getId());
+        deviceServiceById.setPort(device.getPort());
+
+        deviceService.save(deviceServiceById);
+
+        return "redirect:/";
 
 
     }

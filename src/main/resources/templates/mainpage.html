@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
 
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head >
 <body>
@@ -13,7 +15,7 @@ main
 
 <ul th:each="device:${devices}">
     <li >
-        <a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipadress}" ></a>
+        <a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>
     </li>
 </ul>
 
