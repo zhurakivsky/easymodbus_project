@@ -23,7 +23,7 @@ public class DiscreteRegister {
     private String name;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+//            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private Device device;

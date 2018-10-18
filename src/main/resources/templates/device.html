@@ -187,14 +187,14 @@
             input.setAttribute("id", idOfButton);
             input.setAttribute("placeholder", "address");
             var inputName = document.createElement("input");
-            input.setAttribute("type", "text");
-            input.setAttribute("id", idOfButton+"Name");
-            input.setAttribute("placeholder", "name of address");
+            inputName.setAttribute("type", "text");
+            inputName.setAttribute("id", idOfButton+"Name");
+            inputName.setAttribute("placeholder", "name of address");
             var inputSubmit = document.createElement("input");
             inputSubmit.setAttribute("type", "submit");
             inputSubmit.setAttribute("id", idOfButton+"btn");
-            document.getElementById('div'+idOfButton).appendChild(inputName);
             document.getElementById('div'+idOfButton).appendChild(input);
+            document.getElementById('div'+idOfButton).appendChild(inputName);
 
             document.getElementById('div'+idOfButton).appendChild(inputSubmit);
         }else if(document.getElementById("createHoldingRegister")!=null){

@@ -23,7 +23,7 @@ public class HoldingRegister {
     private String name;
 
     @ManyToOne(
-            cascade = CascadeType.,
+//            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private Device device;
