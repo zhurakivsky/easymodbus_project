@@ -1,12 +1,15 @@
 package com.example.easymodbus_project.controller;
 
 import com.example.easymodbus_project.model.Device;
+import com.example.easymodbus_project.model.HoldingRegister;
 import com.example.easymodbus_project.service.DeviceService;
+import com.example.easymodbus_project.service.HoldingRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,8 @@ public class MainController {
 
     @Autowired
     DeviceService deviceService;
+    @Autowired
+    HoldingRegisterService holdingRegisterService;
 
     @GetMapping("/")
     public String mainpage (
@@ -41,6 +46,8 @@ public class MainController {
     ){
         Device devicebyId = deviceService.findById(id);
         model.addAttribute(devicebyId);
+        List<HoldingRegister> all = devicebyId.getHoldingRegisters();
+        model.addAttribute("holdingRegisters", all);
 
         return "device";
     }
@@ -133,7 +140,40 @@ public class MainController {
 
     }
 
+    @PostMapping("/device/createHR/{id}")
+    public String   createHR(
+            @RequestBody HoldingRegister holdingRegister,
+            @PathVariable int id
+
+
+            )
+
+
+    {
+        System.out.println("***********************************************");
+        System.out.println("***********************************************");
+        System.out.println("***********************************************");
+
+
+        System.out.println(id);
+        holdingRegister.setDevice(deviceService.findById(id));
+        holdingRegisterService.save(holdingRegister);
+        System.out.println(holdingRegister);
+
+        return "redirect:/";
 
 
 
-}
+
+    }
+    @GetMapping("/holdingRegister/del/{id}/{device_id}")
+    public String delRegister(
+            @PathVariable int id,
+            @PathVariable int device_id
+    ) {
+        holdingRegisterService.delete(id);
+        return "redirect:/device/"+device_id;
+
+    }
+
+    }

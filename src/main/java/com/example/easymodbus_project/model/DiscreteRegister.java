@@ -20,6 +20,7 @@ public class DiscreteRegister {
     private int id;
     private int address;
     private boolean value;
+    private String name;
 
     @ManyToOne(
             cascade = CascadeType.ALL,

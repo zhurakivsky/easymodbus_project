@@ -20,9 +20,10 @@ public class HoldingRegister {
     private int id;
     private int address;
     private int value;
+    private String name;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.,
             fetch = FetchType.LAZY
     )
     private Device device;

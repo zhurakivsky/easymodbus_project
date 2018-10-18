@@ -23,6 +23,7 @@ public class CoilsRegister {
     private int id;
     private int address;
     private boolean value;
+    private String name;
 
     @ManyToOne(
             cascade = CascadeType.ALL,

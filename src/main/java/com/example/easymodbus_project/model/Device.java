@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 @Entity
-@ToString (exclude = {"coilsRegistr","digitalRegistr","holdingRegistr", "inputRegistr"})
+@ToString (exclude = {"coilsRegisters","discreteRegisters","holdingRegisters", "inputRegisters"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
