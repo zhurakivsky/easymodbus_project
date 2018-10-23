@@ -10,7 +10,7 @@
 </head >
 <body>
 main
-<button id = "createDevice"><a href="/createDivice">Add a device</a></button>
+<button id = "createDevice"><a href="/createDevice">Add a device</a></button>
 
 
 <ul th:each="device:${devices}">
@@ -42,7 +42,7 @@ main
 <script>
 
 
-   let $btn = $("#btn")
+   let $btn = $("#btn");
    $btn.click(function () {
        let $input1 = $('#writeHoldingReg1');
        let start = $input1.val();
@@ -50,9 +50,9 @@ main
        let $input2 = $('#writeHoldingReg2') ;
        let value = $input2.val();
        $input2.val('');
-       console.log(start)
-       console.log(value)
-       let adress = JSON.stringify({start, value})
+       console.log(start);
+       console.log(value);
+       let adress = JSON.stringify({start, value});
        $.ajax({
            url: 'http://localhost:8080/write/test',
            type:'PUT',

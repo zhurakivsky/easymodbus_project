@@ -67,7 +67,7 @@ public class RestConroller {
     @GetMapping("/request")
     public boolean req(){
         ModbusClientConnect modbusClientConnect = new ModbusClientConnect();
-
+//
         ReadInputRegisters.readInputRegisters();
 
         ReadHoldingRegisters.readHoldingRegisters();

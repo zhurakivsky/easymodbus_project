@@ -40,26 +40,26 @@ public class MainController {
 
 
     @GetMapping("/device/{id}")
-    public String toDevice(
-            @PathVariable int id,
-            Model model
+        public String toDevice(
+        @PathVariable int id,
+        Model model
     ){
-        Device devicebyId = deviceService.findById(id);
-        model.addAttribute(devicebyId);
-        List<HoldingRegister> all = devicebyId.getHoldingRegisters();
-        model.addAttribute("holdingRegisters", all);
-        String ipAddress = devicebyId.getIpAddress();
-        ModbusClientConnect.ipAddress = ipAddress;
-        int port = devicebyId.getPort();
-        System.out.println(port);
-        System.out.println(ipAddress);
-        ModbusClientConnect.port = port;
+            Device device = deviceService.findById(id);
+            model.addAttribute(device);
+            List<HoldingRegister> all = device.getHoldingRegisters();
+            model.addAttribute("holdingRegisters", all);
+            String ipAddress = device.getIpAddress();
+            ModbusClientConnect.ipAddress = ipAddress;
+            int port = device.getPort();
+            System.out.println(port);
+            System.out.println(ipAddress);
+            ModbusClientConnect.port = port;
 
 
         return "device";
     }
-    @GetMapping("/createDivice")
-    public String createDivice(){
+    @GetMapping("/createDevice")
+    public String createDevice(){
         return "createDevice";
     }
 
