@@ -13,7 +13,6 @@ public class ModbusClientConnect{
 
 
 
-
      public boolean isconnect;
 
     public ModbusClientConnect(){

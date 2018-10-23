@@ -55,6 +55,7 @@ public class MainController {
         System.out.println(ipAddress);
         ModbusClientConnect.port = port;
 
+
         return "device";
     }
     @GetMapping("/createDivice")
