@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class ModbusClientConnect{
 
-    public static String ipAdress =  "127.0.0.1";
-    public static int port = 1502;
+    public static String ipAddress;
+    public static int port;
      static ModbusClient modbusClient;
 
 
@@ -17,7 +17,7 @@ public class ModbusClientConnect{
      public boolean isconnect;
 
     public ModbusClientConnect(){
-        modbusClient = new ModbusClient(ipAdress, port);
+        modbusClient = new ModbusClient(ipAddress, port);
 //        modbusClient.setConnectionTimeout(3000);
 //        System.out.println(modbusClient.getConnectionTimeout());
         try {

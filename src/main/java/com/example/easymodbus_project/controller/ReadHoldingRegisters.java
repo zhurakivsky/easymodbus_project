@@ -7,6 +7,7 @@ import java.io.IOException;
 public class ReadHoldingRegisters {
 
     public static int [] holdRegisters;
+    public static int address;
 
 
     public static void readHoldingRegisters() {
@@ -19,7 +20,7 @@ public class ReadHoldingRegisters {
         while (ModbusClientConnect.modbusClient.isConnected()) {
 //            System.out.println("зчитування ходінг регістрів   "+ModbusClientConnect.modbusClient.isConnected());
             try {
-                holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(1, 1);
+                holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(address, 1);
             } catch (ModbusException e) {
                 e.printStackTrace();
                 System.out.println("error1");

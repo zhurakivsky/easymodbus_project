@@ -2,7 +2,9 @@ package com.example.easymodbus_project.controller;
 
 import com.example.easymodbus_project.AdressWrite;
 import com.example.easymodbus_project.model.Device;
+import com.example.easymodbus_project.model.HoldingRegister;
 import com.example.easymodbus_project.service.DeviceService;
+import com.example.easymodbus_project.service.HoldingRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import de.re.easymodbus.modbusclient.ModbusClient;
@@ -27,6 +29,8 @@ public class RestConroller {
 
     @Autowired
     DeviceService deviceService;
+    @Autowired
+    HoldingRegisterService holdingRegisterService;
 
 
 
@@ -54,13 +58,13 @@ public class RestConroller {
 
 
 
-    @GetMapping("/hre1")
-    public int readholdingr1(){
-        return holdingregistr1;
+//    @GetMapping("/hre1")
+//    public int readholdingr1(){
+//        return holdingregistr1;
 
-    }
-
-    @GetMapping("/req")
+//    }
+//
+    @GetMapping("/request")
     public boolean req(){
         ModbusClientConnect modbusClientConnect = new ModbusClientConnect();
 
@@ -79,48 +83,55 @@ public class RestConroller {
 
 
 
-    @GetMapping("/reg17")
-public int myModbusConnect17(){
-//        ModbusClientConnect modbusClientConnect1 = new ModbusClientConnect("192.168.0.107", 502);\
 
-    return
-//            modbusClientConnect1.reg17;
-        registr17;
+    @GetMapping("/register/{id}")
+public int myModbusConnect(
+        @PathVariable int id
+    ){
+
+        HoldingRegister byId = holdingRegisterService.findById(id);
+        int address = byId.getAddress();
+        System.out.println(address);
+        ReadHoldingRegisters.address = address;
+
+
+        return
+        holdingregistr1;
 }
-    @GetMapping("/reg18")
-    public int myModbusConnect18(){
-//        ModbusClientConnect modbusClientConnect= new ModbusClientConnect("192.168.0.107", 502);
-//        ModbusClientConnect modbusClientConnect2 = new ModbusClientConnect("192.168.0.107", 502);
-//        modbusClientConnect.run();
-//        Thread thread3 = new Thread(modbusClientConnect2);
-//        thread3.start();
-        return
-//              modbusClientConnect2.reg18;
-         registr18;
-    }
-    @GetMapping("/reg19")
-    public int myModbusConnect19(){
-//        ModbusClientConnect modbusClientConnect3 = new ModbusClientConnect("192.168.0.107", 502);
-//        ModbusClientConnect modbusClientConnect3 = new ModbusClientConnect("192.168.0.107", 502);
-//        modbusClientConnect.run();
-//        Thread thread1 = new Thread(modbusClientConnect3);
-//        thread1.start();
-        return
-//                modbusClientConnect3.reg19;
-        registr19;
-    }
-
-    @GetMapping("/reg20")
-    public int myModbusConnect20(){
-//        ModbusClientConnect modbusClientConnect4 = new ModbusClientConnect("192.168.0.107", 502);
-//        ModbusClientConnect modbusClientConnect4 = new ModbusClientConnect("192.168.0.107", 502);
-//        modbusClientConnect4.run();
-//        Thread thread2 = new Thread(modbusClientConnect4);
-//        thread2.start();
-        return
-//                modbusClientConnect4.reg20;
-        registr20;
-    }
+//    @GetMapping("/reg18")
+//    public int myModbusConnect18(){
+////        ModbusClientConnect modbusClientConnect= new ModbusClientConnect("192.168.0.107", 502);
+////        ModbusClientConnect modbusClientConnect2 = new ModbusClientConnect("192.168.0.107", 502);
+////        modbusClientConnect.run();
+////        Thread thread3 = new Thread(modbusClientConnect2);
+////        thread3.start();
+//        return
+////              modbusClientConnect2.reg18;
+//         registr18;
+//    }
+//    @GetMapping("/reg19")
+//    public int myModbusConnect19(){
+////        ModbusClientConnect modbusClientConnect3 = new ModbusClientConnect("192.168.0.107", 502);
+////        ModbusClientConnect modbusClientConnect3 = new ModbusClientConnect("192.168.0.107", 502);
+////        modbusClientConnect.run();
+////        Thread thread1 = new Thread(modbusClientConnect3);
+////        thread1.start();
+//        return
+////                modbusClientConnect3.reg19;
+//        registr19;
+//    }
+//
+//    @GetMapping("/reg20")
+//    public int myModbusConnect20(){
+////        ModbusClientConnect modbusClientConnect4 = new ModbusClientConnect("192.168.0.107", 502);
+////        ModbusClientConnect modbusClientConnect4 = new ModbusClientConnect("192.168.0.107", 502);
+////        modbusClientConnect4.run();
+////        Thread thread2 = new Thread(modbusClientConnect4);
+////        thread2.start();
+//        return
+////                modbusClientConnect4.reg20;
+//        registr20;
+//    }
 
 
 }

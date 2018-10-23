@@ -26,10 +26,13 @@
 </div>
 
 <div style="text-align: center">
+    <h3 id="req">Стан підключення</h3>
+
     <div id="divcreateHoldingRegister">
     <ul th:each="holdingRegister:${holdingRegisters}">
         <li >
-            <h4 th:href="'/registers/'+ ${holdingRegister.id}" th:text="${holdingRegister.name}+'------'+${holdingRegister.id} + ':' + ${holdingRegister.address}" ></h4>
+            <h4 th:href="'/registers/'+ ${holdingRegister.id}" th:text="${holdingRegister.name}+'------' + ${holdingRegister.address}" ></h4>
+            <h3 id="register"></h3>
             <a th:href="'/holdingRegister/del/'+ ${holdingRegister.id}+'/'+${device.id}"><button>  Видалити </button></a>
         </li>
     </ul>
@@ -308,6 +311,34 @@
 
     }
 
+    setInterval(function req() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/request",
+            success: function (data) {
+                document.getElementById('req').innerText = data;
+            }
+        })
+    }, 3000);
+
+
+    setInterval(function register() {
+        // let id = [[${holdingRegister.id}]];
+        console.log("******");
+        // console.log(id);
+
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/register/"+id ,
+            success: function (data) {
+                document.getElementById('register').innerText = data;
+            }
+        })
+    }, 1000);
 
 </script>
 

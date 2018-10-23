@@ -48,6 +48,12 @@ public class MainController {
         model.addAttribute(devicebyId);
         List<HoldingRegister> all = devicebyId.getHoldingRegisters();
         model.addAttribute("holdingRegisters", all);
+        String ipAddress = devicebyId.getIpAddress();
+        ModbusClientConnect.ipAddress = ipAddress;
+        int port = devicebyId.getPort();
+        System.out.println(port);
+        System.out.println(ipAddress);
+        ModbusClientConnect.port = port;
 
         return "device";
     }
@@ -74,12 +80,12 @@ public class MainController {
     @PostMapping("/addDevice")
     public String addDevice(
             @RequestParam String name,
-            @RequestParam String ipadress,
+            @RequestParam String ipAddress,
             @RequestParam int port
     ){
 
         System.out.println(name);
-        Device device = Device.builder().ipAddress(ipadress).name(name).port(port).build();;
+        Device device = Device.builder().ipAddress(ipAddress).name(name).port(port).build();
 
         System.out.println(device.getName());
         deviceService.save(device);
