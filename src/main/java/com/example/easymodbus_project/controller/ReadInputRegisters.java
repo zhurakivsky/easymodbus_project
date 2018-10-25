@@ -61,21 +61,21 @@ public class ReadInputRegisters {
                 readInputRegisters();
             }
 
-            for (int i = 0; i < registres.length; i++) {
-
-                reg17 = registres[0];
-                reg18 = registres[1];
-                reg19 = registres[2];
-                reg20 = registres[3];
-                reg21 = registres[4];
-
-
-
-                RestConroller.registr17 = reg17;
-                RestConroller.registr18 = reg18;
-                RestConroller.registr19 = reg19;
-                RestConroller.registr20 = reg20;
-                RestConroller.registr21 = reg21;
+//            for (int i = 0; i < registres.length; i++) {
+//
+//                reg17 = registres[0];
+//                reg18 = registres[1];
+//                reg19 = registres[2];
+//                reg20 = registres[3];
+//                reg21 = registres[4];
+//
+//
+//
+//                RestConroller.registr17 = reg17;
+//                RestConroller.registr18 = reg18;
+//                RestConroller.registr19 = reg19;
+//                RestConroller.registr20 = reg20;
+//                RestConroller.registr21 = reg21;
 
             }
 
@@ -89,14 +89,14 @@ public class ReadInputRegisters {
             }
         }
 
-
-        System.out.println(reg17);
-        System.out.println(reg18);
-        System.out.println(reg19);
-        System.out.println(reg20);
-        System.out.println(reg21);
+//
+//        System.out.println(reg17);
+//        System.out.println(reg18);
+//        System.out.println(reg19);
+//        System.out.println(reg20);
+//        System.out.println(reg21);
     }
 
 
 
-}
+

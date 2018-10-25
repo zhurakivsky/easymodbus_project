@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 
 
-public class InputRegister {
+public class InputRegister  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

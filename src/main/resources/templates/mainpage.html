@@ -9,7 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head >
 <body>
-main
 <button id = "createDevice"><a href="/createDevice">Add a device</a></button>
 
 
@@ -21,21 +20,7 @@ main
 
 
 
-<h5>Підключення до приладу</h5>
-<h5 id="req"></h5>
-<h5>Температура 17 регістр</h5>
-<h5 id="reg17"></h5>
-<h5>Температура 18 регістр</h5>
-<h5 id="reg18"></h5>
-<h5>Температура 19 регістр</h5>
-<h5 id="reg19"></h5>
-<h5>Температура 20 регістр</h5>
-<h5 id="reg20"></h5>
-<h5>Стан установки</h5>
-<h5 id="hre1"></h5>
-
-
-    <input type="text" id="writeHoldingReg1" name="start1" placeholder="start adress" /><br>
+    <input type="text" id="writeHoldingReg1" name="start1" placeholder="start address" /><br>
     <input type="text" id="writeHoldingReg2" name="value1" placeholder="value" /><br>
    <button id = "btn">  записати</button>
 
@@ -50,17 +35,12 @@ main
        let $input2 = $('#writeHoldingReg2') ;
        let value = $input2.val();
        $input2.val('');
-       console.log(start);
-       console.log(value);
-       let adress = JSON.stringify({start, value});
+       let address = JSON.stringify({start, value});
        $.ajax({
            url: 'http://localhost:8080/write/test',
            type:'PUT',
-           data: adress,
+           data: address,
            contentType:'application/json',
-           error: function(err){
-               console.log(err);
-           },
            success: function (result) {
                console.log(result);
            }
@@ -72,76 +52,7 @@ main
 
 
 
-    setInterval(function reg17() {
 
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/reg17",
-            success: function (data) {
-                document.getElementById('reg17').innerText = data;
-            }
-        })
-    }, 1000);
-
-
-
-
-        setInterval(function reg18() {
-
-
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:8080/reg18",
-                success: function (data) {
-                    document.getElementById('reg18').innerText = data;
-                }
-            })
-        }, 1000);
-    setInterval(function reg19() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/reg19",
-            success: function (data) {
-                document.getElementById('reg19').innerText = data;
-            }
-        })
-    }, 1000);
-    setInterval(function reg20() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/reg20",
-            success: function (data) {
-                document.getElementById('reg20').innerText = data;
-            }
-        })
-    }, 1000);
-    setInterval(function req() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/req",
-            success: function (data) {
-                document.getElementById('req').innerText = data;
-            }
-        })
-    }, 3000);
-    setInterval(function hre1() {
-
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/hre1",
-            success: function (data) {
-                document.getElementById('hre1').innerText = data;
-            }
-        })
-    }, 1000);
 </script>
 </body>
 </html>

@@ -14,9 +14,9 @@
 </div>
 <div style="text-align: center">
 
-    <h1 th:href="'/device/'+ ${device.id}" th:text="${device.name}" ></h1>
-    <h2 th:href="'/device/'+ ${device.id}" th:text="'ipAddress = ' + ${device.ipAddress}" ></h2>
-    <h2 th:href="'/device/'+ ${device.id}" th:text="'port = '+ ${device.port} " ></h2>
+    <h1 th:text="${device.name}"  ></h1>
+    <h2 th:text="'ipAddress = ' + ${device.ipAddress}" ></h2>
+    <h2 th:text="'port = '+ ${device.port} " ></h2>
     <div id="editDevice" >
         <a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a>
         <button onclick="edit('rename')" >  Rename </button>
@@ -24,30 +24,36 @@
         <button onclick="edit('port')" >  Change Port  </button><br>
     </div>
 </div>
-<h3 >Стан підключення:<h3 id="req"></h3></h3>
+<h3 style="text-align: center">Стан підключення: <b id="req"></b></h3>
 
 <div style="text-align: center">
     <div id="divcreateHoldingRegister">
         <ul th:each="holdingRegister:${holdingRegisters}">
             <li>
-                <h4 th:href="'/registers/'+ ${holdingRegister.id}"  th:text="${holdingRegister.name}+'------ id '+${holdingRegister.id} + ', address:' + ${holdingRegister.address}" ></h4>
-                <h3 id="register"></h3>
-                <a th:href="'/holdingRegister/del/'+ ${holdingRegister.id}+'/'+${device.id}"><button>  Видалити </button></a>
+                <h4   th:text="${holdingRegister.name}+'------ id '+${holdingRegister.id} + ', address:' + ${holdingRegister.address}" ></h4>
+                <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="register" ></b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
+                <br>
+                <a th:href="'/register/del/'+ ${holdingRegister.id}+'/'+${device.id}"> Delete register</a>
+
+
             </li>
         </ul>
         <button onclick=createRegister('createHoldingRegister')>   Додайте адрес Holding регістра
         </button>
     </div>
     <div id="divcreateInputRegister">
-        <br>
+
         <ul th:each="inputRegister:${inputRegisters}">
             <li >
-                <a th:href="'/registers/'+ ${inputRegister.id}" th:text="${inputRegister.address} + ':' + ${inputRegister.value}" ></a>
+                <h4   th:text="${inputRegister.name}+'------ id '+${inputRegister.id} + ', address:' + ${inputRegister.address}" ></h4>
+                <!--<button th:id="${inputRegister.id}" onclick="change('-')">-</button>--> <b th:id="${inputRegister.id}" name="register" ></b> <!--<button th:id="${inputRegister.id}" onclick="change('+')">+</button>-->
+                <br>
+                <a th:href="'/register/del/'+ ${inputRegister.id}+'/'+${device.id}"> Delete register</a>
+
 
             </li>
         </ul>
-        <button onclick=createRegister('createInputRegister')>    Додайте адрес Input регістра
-        </button>
+        <button onclick=createRegister('createInputRegister')> Додайте адрес Input регістра</button>
     </div>
     <div id="divcreateDiscreteRegister">
         <br>
@@ -70,33 +76,72 @@
     </div>
 
 
-
-
-
-    <ul th:each="device:${devices}">
-        <li >
-            <a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>
-        </li>
-    </ul>
-
+    <!--<ul th:each="device:${devices}">-->
+        <!--<li >-->
+            <!--<a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>-->
+        <!--</li>-->
+    <!--</ul>-->
 
 </div>
 
 
 <script th:inline="javascript">
+    function change( znak ) {
+        let id = event.target.id;
+        let elementsByName = document.getElementsByName('register');
+        for (let i = 0; i < elementsByName.length; i++) {
+            let insertEle = elementsByName[i];
+            if(elementsByName[i].id===id){
+                $.ajax({
+                    type:'PUT',
+                    url: 'http://localhost:8080/write/change/' +id + '/' + znak,
+                    success: function (data) {
+                        insertEle.innerText = data;
+                    }
+                })
+            }
+
+        }
 
 
+
+
+
+
+
+    }
+
+    setInterval( function () {
+        let elementsByName = document.getElementsByName('register');
+        for(let i = 0; i<elementsByName.length; i++){
+            let element = elementsByName[i];
+            let id = elementsByName[i].id;
+
+            listener(element,id);
+
+        }
+    },3000);
+    function listener( element, id ) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/register/" + id ,
+            success: function (data) {
+                element.innerText = data;
+            }
+
+        })
+    }
 
     function edit(idOfButton) {
 
         if(document.getElementById("rename")==null
             && document.getElementById("ip")==null
             && document.getElementById("port")==null) {
-            var input = document.createElement("input");
+            let input = document.createElement("input");
             input.setAttribute("type", "text");
             input.setAttribute("id", idOfButton);
             input.setAttribute("placeholder", idOfButton);
-            var inputSubmit = document.createElement("input");
+            let inputSubmit = document.createElement("input");
             inputSubmit.setAttribute("type", "submit");
             inputSubmit.setAttribute("id", idOfButton+"btn");
             document.getElementById("editDevice").appendChild(input);
@@ -119,12 +164,12 @@
         $idOfButton.click(function () {
             let id = [[${device.id}]];
             let deviceData;
-            if(idOfButton =="rename") {
+            if(idOfButton ==="rename") {
                 let $name = $('#' + idOfButton);
                 let name = $name.val();
                 $name.val('');
 
-                deviceData = JSON.stringify({id, name})
+                deviceData = JSON.stringify({id, name});
                 $.ajax({
                     url: 'http://localhost:8080/setName',
                     type: 'POST',
@@ -134,12 +179,12 @@
                         document.location.reload(true);
                     }})
             }
-            else if(idOfButton =="ip") {
+            else if(idOfButton ==="ip") {
                 let $name = $('#' + idOfButton);
                 let ipAddress = $name.val();
                 $name.val('');
 
-                deviceData = JSON.stringify({id, ipAddress})
+                deviceData = JSON.stringify({id, ipAddress});
                 $.ajax({
                     url: 'http://localhost:8080/setIpAddress',
                     type: 'POST',
@@ -156,12 +201,12 @@
                 })
 
             }
-            else if(idOfButton =="port") {
+            else if(idOfButton ==="port") {
                 let $name = $('#' + idOfButton);
                 let port = $name.val();
                 $name.val('');
 
-                deviceData = JSON.stringify({id, port})
+                deviceData = JSON.stringify({id, port});
                 $.ajax({
                     url: 'http://localhost:8080/setPort',
                     type: 'POST',
@@ -187,54 +232,65 @@
             && document.getElementById("createInputRegister")==null
             && document.getElementById("createDiscreteRegister")==null
             && document.getElementById("createCoilsRegister")==null) {
-            var input = document.createElement("input");
+            let input = document.createElement("input");
             input.setAttribute("type", "text");
             input.setAttribute("id", idOfButton);
             input.setAttribute("placeholder", "address");
-            var inputName = document.createElement("input");
+            let inputName = document.createElement("input");
             inputName.setAttribute("type", "text");
             inputName.setAttribute("id", idOfButton+"Name");
             inputName.setAttribute("placeholder", "name of address");
-            var inputSubmit = document.createElement("input");
+            let inputSubmit = document.createElement("input");
             inputSubmit.setAttribute("type", "submit");
             inputSubmit.setAttribute("id", idOfButton+"btn");
             document.getElementById('div'+idOfButton).appendChild(input);
             document.getElementById('div'+idOfButton).appendChild(inputName);
-
             document.getElementById('div'+idOfButton).appendChild(inputSubmit);
-        }else if(document.getElementById("createHoldingRegister")!=null){
+
+        }
+        else if(document.getElementById("createHoldingRegister")!=null){
             document.getElementById("createHoldingRegister").remove();
             document.getElementById("createHoldingRegisterbtn").remove();
-            createRegister(idOfButton);
-        }else if(document.getElementById("createInputRegister")!=null){
-            document.getElementById("createInputRegister").remove();
-            document.getElementById("createInputRegisterbtn").remove();
-            createRegister(idOfButton);
-
-        }else if(document.getElementById("createDiscreteRegister")!=null){
-            document.getElementById("createDiscreteRegister").remove();
-            document.getElementById("createDiscreteRegisterbtn").remove();
-            createRegister(idOfButton);
-        }else if(document.getElementById("createCoilsRegister")!=null){
-            document.getElementById("createCoilsRegister").remove();
-            document.getElementById("createCoilsRegisterbtn").remove();
+            document.getElementById("createHoldingRegisterName").remove();
             createRegister(idOfButton);
         }
-        let $idOfButton = $('#'+idOfButton+'btn');
+        else if(document.getElementById("createInputRegister")!=null){
+            document.getElementById("createInputRegister").remove();
+            document.getElementById("createInputRegisterbtn").remove();
+            document.getElementById("createInputRegisterName").remove();
+            createRegister(idOfButton);
+
+        }
+        else if(document.getElementById("createDiscreteRegister")!=null){
+            document.getElementById("createDiscreteRegister").remove();
+            document.getElementById("createDiscreteRegisterbtn").remove();
+            document.getElementById("createDiscreteRegisterName").remove();
+            createRegister(idOfButton);
+        }
+        else if(document.getElementById("createCoilsRegister")!=null){
+            document.getElementById("createCoilsRegister").remove();
+            document.getElementById("createCoilsRegisterName").remove();
+            createRegister(idOfButton);
+        }
+
+        let $idOfButton = $("#" + idOfButton + "btn");
         $idOfButton.click(function () {
             let id = [[${device.id}]];
             let addressData;
-            if(idOfButton =="createHoldingRegister") {
-                let $address = $('#' + idOfButton);
-                let address = $address.val();
-                $address.val('');
-                let $name = $('#' + idOfButton+"Name");
-                let name = $name.val();
-                $name.val('');
-
-                addressData = JSON.stringify({address, name})
-                $.ajax({
-                    url: 'http://localhost:8080/device/createHR/'+id,
+            let $address = $('#' + idOfButton);
+            let address = $address.val();
+            $address.val('');
+            let $name = $('#' + idOfButton+"Name");
+            let name = $name.val();
+            $name.val('');
+            addressData = JSON.stringify({address, name});
+            let url ;
+            if(idOfButton ==="createHoldingRegister"){url = 'http://localhost:8080/device/createHR/'+id}
+            else if (idOfButton ==="createInputRegister"){url = 'http://localhost:8080/device/createIR/'+id}
+            else if (idOfButton ==="createDiscreteRegister"){url = 'http://localhost:8080/device/createDR/'+id}
+            else if (idOfButton ==="createCoilsRegister"){url = 'http://localhost:8080/device/createCR/'+id}
+            $.ajax({
+                    url: url,
                     type: 'POST',
                     data: addressData,
                     contentType: 'application/json',
@@ -242,100 +298,26 @@
                         document.location.reload(true);
                     }
                 })
-            }
-            else if(idOfButton =="createInputRegister") {
-                let $name = $('#' + idOfButton);
-                let ipAddress = $name.val();
-                $name.val('');
-
-                addressData = JSON.stringify({id, ipAddress})
-                $.ajax({
-                    url: 'http://localhost:8080/createIR',
-                    type: 'POST',
-                    data: addressData,
-                    contentType: 'application/json',
-                    success: function () {
-                        document.location.reload(true);
-                    }
 
 
-
-
-
-                })
-
-            }
-            else if(idOfButton =="createDiscreteRegister") {
-                let $name = $('#' + idOfButton);
-                let ipAddress = $name.val();
-                $name.val('');
-
-                addressData = JSON.stringify({id, ipAddress})
-                $.ajax({
-                    url: 'http://localhost:8080/createDR',
-                    type: 'POST',
-                    data: addressData,
-                    contentType: 'application/json',
-                    success: function () {
-                        document.location.reload(true);
-                    }
-
-
-
-
-
-                })
-
-            }
-            else if(idOfButton =="createCoilsRegister") {
-                let $name = $('#' + idOfButton);
-                let port = $name.val();
-                $name.val('');
-
-                addressData= JSON.stringify({id, port});
-                $.ajax({
-                    url: 'http://localhost:8080/createCR',
-                    type: 'POST',
-                    data: addressData,
-                    contentType: 'application/json',
-                    success: function () {
-                        document.location.reload(true);
-                    }
-
-
-
-
-
-                })
-
-            }
         })
 
     }
 
-
     setInterval(function req() {
-
-
-            $.ajax({
+        let elementReq = document.getElementById('req');
+        $.ajax({
                 type: "GET",
                 url: "http://localhost:8080/request",
                 success: function (data) {
-                    document.getElementById('req').innerText = data;
+                    if(data === true){elementReq.style.setProperty('color','green');}
+                    else{elementReq.style.setProperty('color','red');}
+                    elementReq.innerText = data;
                 }
             })
-        }, 3000);
-    setInterval(function reg20() {
+    }, 3000);
 
 
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/register/38",
-            success: function (data) {
-                document.getElementById('register').innerText = data;
-            }
-        })
-    }, 1000);
 
 </script>
 

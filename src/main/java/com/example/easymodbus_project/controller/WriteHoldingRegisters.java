@@ -10,6 +10,7 @@ public class WriteHoldingRegisters {
 
 
     public static void writeHoldingRegisters(int startingAdress, int value){
+
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {

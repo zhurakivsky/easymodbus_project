@@ -1,9 +1,7 @@
 package com.example.easymodbus_project.controller;
 
-import com.example.easymodbus_project.model.Device;
-import com.example.easymodbus_project.model.HoldingRegister;
-import com.example.easymodbus_project.service.DeviceService;
-import com.example.easymodbus_project.service.HoldingRegisterService;
+import com.example.easymodbus_project.model.*;
+import com.example.easymodbus_project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,44 +15,45 @@ import java.util.Optional;
 public class MainController {
 
     @Autowired
-    DeviceService deviceService;
+    private DeviceService deviceService;
     @Autowired
-    HoldingRegisterService holdingRegisterService;
+    private HoldingRegisterService holdingRegisterService;
+    @Autowired
+    private  InputRegisterService inputRegisterService;
+    @Autowired
+    private CoilsRegisterService coilsRegisterService;
+    @Autowired
+    private DiscreteRegisterService discreteRegisterService;
+
+
 
     @GetMapping("/")
     public String mainpage (
-            Model model
-    ){
+            Model model){
 
         List<Device> devices = deviceService.findAll();
 
         model.addAttribute("devices", devices);
 
         return "mainpage";
-
-
-
-
     }
-
-
-
     @GetMapping("/device/{id}")
         public String toDevice(
         @PathVariable int id,
         Model model
     ){
-            Device device = deviceService.findById(id);
-            model.addAttribute(device);
-            List<HoldingRegister> all = device.getHoldingRegisters();
-            model.addAttribute("holdingRegisters", all);
-            String ipAddress = device.getIpAddress();
-            ModbusClientConnect.ipAddress = ipAddress;
-            int port = device.getPort();
-            System.out.println(port);
-            System.out.println(ipAddress);
-            ModbusClientConnect.port = port;
-
+        Device device = deviceService.findById(id);
+        model.addAttribute(device);
+        List<HoldingRegister> holdingRegisters = device.getHoldingRegisters();
+        List<CoilsRegister> coilsRegisters = device.getCoilsRegisters();
+        List<InputRegister> inputRegisters = device.getInputRegisters();
+        List<DiscreteRegister> discreteRegisters = device.getDiscreteRegisters();
+        model.addAttribute("holdingRegisters", holdingRegisters);
+        model.addAttribute("coilsRegisters", coilsRegisters);
+        model.addAttribute("inputRegisters", inputRegisters );
+        model.addAttribute("discreteRegisters", discreteRegisters);
+        ModbusClientConnect.ipAddress = device.getIpAddress();
+        ModbusClientConnect.port = device.getPort();
 
         return "device";
     }
@@ -70,20 +69,13 @@ public class MainController {
         deviceService.delete(id);
         return "redirect:/";
     }
-//    @GetMapping("/device/editName/{id}")
-//    public String editName(
-//            @PathVariable int id
-//    ){
-//        deviceService.findById(id);
-//        return "redirect:/";
-//    }
+
 
     @PostMapping("/addDevice")
     public String addDevice(
             @RequestParam String name,
             @RequestParam String ipAddress,
-            @RequestParam int port
-    ){
+            @RequestParam int port){
 
         System.out.println(name);
         Device device = Device.builder().ipAddress(ipAddress).name(name).port(port).build();
@@ -95,12 +87,7 @@ public class MainController {
     }
     @PostMapping("/setName")
     public String   setName(
-            @RequestBody Device device
-    )
-
-
-
-    {
+            @RequestBody Device device) {
         Device deviceServiceById = deviceService.findById(device.getId());
         deviceServiceById.setName(device.getName());
 
@@ -113,12 +100,7 @@ public class MainController {
 
     @PostMapping("/setIpAddress")
     public String   setIp(
-            @RequestBody Device device
-    )
-
-
-
-    {
+            @RequestBody Device device){
         Device deviceServiceById = deviceService.findById(device.getId());
         deviceServiceById.setIpAddress(device.getIpAddress());
 
@@ -131,12 +113,7 @@ public class MainController {
 
     @PostMapping("/setPort")
     public String   setPort(
-            @RequestBody Device device
-    )
-
-
-
-    {
+            @RequestBody Device device){
         Device deviceServiceById = deviceService.findById(device.getId());
         deviceServiceById.setPort(device.getPort());
 
@@ -147,40 +124,56 @@ public class MainController {
 
     }
 
-    @PostMapping("/device/createHR/{id}")
-    public String   createHR(
-            @RequestBody HoldingRegister holdingRegister,
-            @PathVariable int id
-
-
-            )
-
-
-    {
-        System.out.println("***********************************************");
-        System.out.println("***********************************************");
-        System.out.println("***********************************************");
-
-
-        System.out.println(id);
-        holdingRegister.setDevice(deviceService.findById(id));
-        holdingRegisterService.save(holdingRegister);
-        System.out.println(holdingRegister);
-
-        return "redirect:/";
-
-
-
-
-    }
-    @GetMapping("/holdingRegister/del/{id}/{device_id}")
+    @GetMapping("/register/del/{id}/{device_id}")
     public String delRegister(
             @PathVariable int id,
-            @PathVariable int device_id
-    ) {
+            @PathVariable int device_id) {
         holdingRegisterService.delete(id);
         return "redirect:/device/"+device_id;
 
+    }
+
+
+    @PostMapping("/device/createHR/{id}")
+    public String   createHR(
+            @RequestBody HoldingRegister holdingRegister,
+            @PathVariable int id) {
+
+        holdingRegister.setDevice(deviceService.findById(id));
+        holdingRegisterService.save(holdingRegister);
+
+        return "redirect:/";
+    }
+    @PostMapping("/device/createIR/{id}")
+    public String   createIR(
+            @RequestBody InputRegister inputRegister,
+            @PathVariable int id) {
+
+        inputRegister.setDevice(deviceService.findById(id));
+        inputRegisterService.save(inputRegister);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/device/createCR/{id}")
+    public String   createCR(
+            @RequestBody CoilsRegister coilsRegister,
+            @PathVariable int id) {
+
+        coilsRegister.setDevice(deviceService.findById(id));
+        coilsRegisterService.save(coilsRegister);
+
+        return "redirect:/";
+    }
+    @PostMapping("/device/createDR/{id}")
+    public String   createCR(
+            @RequestBody DiscreteRegister discreteRegister,
+            @PathVariable int id) {
+
+        discreteRegister.setDevice(deviceService.findById(id));
+        discreteRegisterService.save(discreteRegister);
+
+        return "redirect:/";
     }
 
     }

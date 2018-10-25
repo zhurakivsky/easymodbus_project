@@ -15,15 +15,13 @@ public class ModbusClientConnect{
 
      public boolean isconnect;
 
-    public ModbusClientConnect(){
+     ModbusClientConnect(){
         modbusClient = new ModbusClient(ipAddress, port);
-//        modbusClient.setConnectionTimeout(3000);
-//        System.out.println(modbusClient.getConnectionTimeout());
+
         try {
             modbusClient.Connect();
             isconnect = modbusClient.isConnected();
 
-//            System.out.println(modbusClient.getConnectionTimeout());
         } catch (IOException e) {
             e.printStackTrace();
         }

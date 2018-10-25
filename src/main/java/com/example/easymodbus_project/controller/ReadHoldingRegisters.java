@@ -6,11 +6,12 @@ import java.io.IOException;
 
 public class ReadHoldingRegisters {
 
-    public static int [] holdRegisters;
-    public static int address;
+    private static int [] holdRegisters;
 
 
-    public static void readHoldingRegisters() {
+
+    public static int readHoldingRegisters(int address) {
+        int valueOfRegister = 0;
 
         try {
             ModbusClientConnect.modbusClient.Connect();
@@ -18,22 +19,22 @@ public class ReadHoldingRegisters {
             e.printStackTrace();
         }
         while (ModbusClientConnect.modbusClient.isConnected()) {
-//            System.out.println("зчитування ходінг регістрів   "+ModbusClientConnect.modbusClient.isConnected());
+//
             try {
                 holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(address, 1);
             } catch (ModbusException e) {
                 e.printStackTrace();
-                System.out.println("error1");
+                System.out.println("Modbus Exception to read HR");
             } catch (IOException e) {
 //                e.printStackTrace();
-                System.out.println("error2");
+                System.out.println(" Socket Exception");
                 try {
                     ModbusClientConnect.modbusClient.Disconnect();
                 } catch (IOException e1) {
-                    System.out.println("error3");
+                    System.out.println("error3--disconnect");
                     e1.printStackTrace();
                 }
-                readHoldingRegisters();
+                readHoldingRegisters(address);
 
             }
 
@@ -48,21 +49,21 @@ public class ReadHoldingRegisters {
                     e1.printStackTrace();
 
                 }
-                readHoldingRegisters();
+                readHoldingRegisters(address);
             }
-            System.out.println(ModbusClientConnect.modbusClient.isConnected());
+
             for (int j = 0; j < holdRegisters.length; j++) {
-                RestConroller.holdingregistr1 = holdRegisters[j];
-                System.out.println(holdRegisters[j]);
+                valueOfRegister = holdRegisters[j];
 
             }
 //
             try {
                 ModbusClientConnect.modbusClient.Disconnect();
-//                System.out.println("disconnect");
+//
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
+    return valueOfRegister;}
+
 }
