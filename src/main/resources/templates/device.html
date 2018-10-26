@@ -31,7 +31,7 @@
         <ul th:each="holdingRegister:${holdingRegisters}">
             <li>
                 <h4   th:text="${holdingRegister.name}+'------ id '+${holdingRegister.id} + ', address:' + ${holdingRegister.address}" ></h4>
-                <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="register" ></b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
+                <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="holdingRegister" ></b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
                 <br>
                 <a th:href="'/holdingRegister/del/'+ ${holdingRegister.id}+'/'+${device.id}"> Delete register</a>
 
@@ -46,7 +46,7 @@
         <ul th:each="inputRegister:${inputRegisters}">
             <li >
                 <h4   th:text="${inputRegister.name}+'------ id '+${inputRegister.id} + ', address:' + ${inputRegister.address}" ></h4>
-                 <b th:id="${inputRegister.id}" name="register" ></b>
+                 <b th:id="${inputRegister.id}" name="inputRegister" ></b>
                 <br>
                 <a th:href="'/inputRegister/del/'+ ${inputRegister.id}+'/'+${device.id}"> Delete register</a>
 
@@ -60,7 +60,7 @@
         <ul th:each="discreteRegister:${discreteRegisters}">
             <li >
                 <h4   th:text="${discreteRegister.name}+'------ id '+${discreteRegister.id} + ', address:' + ${discreteRegister.address}" ></h4>
-                <b th:id="${discreteRegister.id}" name="register" ></b>
+                <b th:id="${discreteRegister.id}" name="discreteRegister" ></b>
                 <br>
                 <a th:href="'/discreteRegister/del/'+ ${discreteRegister.id}+'/'+${device.id}"> Delete register</a>
             </li>
@@ -75,7 +75,7 @@
                 <a th:href="'/registers/'+ ${coilsRegister.id}" th:text="${coilsRegister.address} + ':' + ${coilsRegister.value}" ></a>
             </li>
         </ul>
-         <!--<b th:id="${coilsRegister.id}" name="register"></b>-->
+         <!--<b th:id="${coilsRegister.id}" name="coilsRegister"></b>-->
         <button onclick=createRegister('createCoilsRegister')>Додайте адрес Coil регістра</button>
     </div>
 
@@ -91,14 +91,17 @@
 
 <script th:inline="javascript">
     function change( znak ) {
+        let elementsByName = document.getElementsByName('holdingRegister');
         let id = event.target.id;
-        let elementsByName = document.getElementsByName('register');
+
         for (let i = 0; i < elementsByName.length; i++) {
             let insertEle = elementsByName[i];
             if(elementsByName[i].id===id){
+                let currentValue = elementsByName[i].innerText;
+                if (znak==='+'){currentValue++;}else if(znak==='-'){currentValue--;}
                 $.ajax({
                     type:'PUT',
-                    url: 'http://localhost:8080/write/change/' +id + '/' + znak,
+                    url: 'http://localhost:8080/write/holdingRegister/' +id + '/' + currentValue,
                     success: function (data) {
                         insertEle.innerText = data;
                     }
@@ -116,19 +119,53 @@
     }
 
     setInterval( function () {
-        let elementsByName = document.getElementsByName('register');
-        for(let i = 0; i<elementsByName.length; i++){
+        let elementsByName = document.getElementsByName('holdingRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
             let element = elementsByName[i];
             let id = elementsByName[i].id;
 
-            listener(element,id);
+            listener(element, id,'holdingRegister');
 
-        }
+            }
+
     },3000);
-    function listener( element, id ) {
+    setInterval( function () {
+         let elementsByName = document.getElementsByName('inputRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+                let element = elementsByName[i];
+                let id = elementsByName[i].id;
+
+                listener(element, id,'inputRegister');
+
+            }
+
+    },3000);
+    setInterval( function () {
+         let elementsByName = document.getElementsByName('discreteRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+                let element = elementsByName[i];
+                let id = elementsByName[i].id;
+
+                listener(element, id,'discreteRegister');
+
+            }
+
+    },3000);
+    setInterval( function () {
+            let elementsByName = document.getElementsByName('coilsRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+                let element = elementsByName[i];
+                let id = elementsByName[i].id;
+
+                listener(element, id,'coilsRegister');
+
+            }
+
+    },3000);
+    function listener( element, id, name ) {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/register/" + id ,
+            url: "http://localhost:8080/"+ name + "/" + id ,
             success: function (data) {
                 element.innerText = data;
             }

@@ -1,6 +1,7 @@
 package com.example.easymodbus_project.controller;
 
 import com.example.easymodbus_project.model.HoldingRegister;
+import com.example.easymodbus_project.model.InputRegister;
 import com.example.easymodbus_project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +22,11 @@ public class RestConroller {
     private DiscreteRegisterService discreteRegisterService;
 
 
-   @PutMapping("/write/change/{id}/{znak}")
+   @PutMapping("/write/holdingRegister/{id}/{value}")
     public int writeTestIncrement(
-            @PathVariable int id,@PathVariable String znak){
+            @PathVariable int id,@PathVariable int value){
 
        HoldingRegister byId = holdingRegisterService.findById(id);
-       int value = ReadHoldingRegisters.readHoldingRegisters(byId.getAddress());
-       if (znak.equals("+")) { value++; } else { value--; }
 
        WriteHoldingRegisters.writeHoldingRegisters(byId.getAddress(),value);
        return value;
@@ -39,14 +38,22 @@ public class RestConroller {
         ModbusClientConnect modbusClientConnect = new ModbusClientConnect();
         return modbusClientConnect.isconnect;
     }
-    @GetMapping("/register/{id}")
-public int myModbusConnect(
+    @GetMapping("/holdingRegister/{id}")
+    public int readHR(
         @PathVariable int id){
         HoldingRegister byId = holdingRegisterService.findById(id);
         int address = byId.getAddress();
 
         return ReadHoldingRegisters.readHoldingRegisters(address);
-}
+    }
+    @GetMapping("/inputRegister/{id}")
+    public int readIR(
+            @PathVariable int id){
+       InputRegister byId = inputRegisterService.findById(id);
+        int address = byId.getAddress();
+
+        return ReadInputRegisters.readInputRegisters(address);
+    }
 
 
 }
