@@ -16,7 +16,6 @@ import javax.persistence.*;
 public class HoldingRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
     private int address;
     private int value;

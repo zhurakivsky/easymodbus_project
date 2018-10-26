@@ -124,11 +124,36 @@ public class MainController {
 
     }
 
-    @GetMapping("/register/del/{id}/{device_id}")
-    public String delRegister(
+    @GetMapping("/holdingRegister/del/{id}/{device_id}")
+    public String delHRegister(
             @PathVariable int id,
             @PathVariable int device_id) {
         holdingRegisterService.delete(id);
+        return "redirect:/device/"+device_id;
+
+    }
+    @GetMapping("/inputRegister/del/{id}/{device_id}")
+    public String delIRegister(
+            @PathVariable int id,
+            @PathVariable int device_id) {
+        inputRegisterService.delete(id);
+        return "redirect:/device/"+device_id;
+
+    }
+
+    @GetMapping("/discreteRegister/del/{id}/{device_id}")
+    public String delDRegister(
+            @PathVariable int id,
+            @PathVariable int device_id) {
+        discreteRegisterService.delete(id);
+        return "redirect:/device/"+device_id;
+
+    }
+    @GetMapping("/coilsRegister/del/{id}/{device_id}")
+    public String delCRegister(
+            @PathVariable int id,
+            @PathVariable int device_id) {
+        coilsRegisterService.delete(id);
         return "redirect:/device/"+device_id;
 
     }

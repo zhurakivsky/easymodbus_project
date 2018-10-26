@@ -19,7 +19,6 @@ import javax.persistence.*;
 public class CoilsRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
     private int address;
     private boolean value;

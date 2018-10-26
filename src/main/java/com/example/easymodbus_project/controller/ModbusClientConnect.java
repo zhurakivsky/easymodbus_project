@@ -18,6 +18,7 @@ public class ModbusClientConnect{
      ModbusClientConnect(){
         modbusClient = new ModbusClient(ipAddress, port);
 
+
         try {
             modbusClient.Connect();
             isconnect = modbusClient.isConnected();

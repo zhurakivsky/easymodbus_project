@@ -1,8 +1,7 @@
 package com.example.easymodbus_project.controller;
 
 import com.example.easymodbus_project.model.HoldingRegister;
-import com.example.easymodbus_project.service.DeviceService;
-import com.example.easymodbus_project.service.HoldingRegisterService;
+import com.example.easymodbus_project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +13,12 @@ public class RestConroller {
     DeviceService deviceService;
     @Autowired
     HoldingRegisterService holdingRegisterService;
+    @Autowired
+    private InputRegisterService inputRegisterService;
+    @Autowired
+    private CoilsRegisterService coilsRegisterService;
+    @Autowired
+    private DiscreteRegisterService discreteRegisterService;
 
 
    @PutMapping("/write/change/{id}/{znak}")

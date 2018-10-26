@@ -33,7 +33,7 @@
                 <h4   th:text="${holdingRegister.name}+'------ id '+${holdingRegister.id} + ', address:' + ${holdingRegister.address}" ></h4>
                 <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="register" ></b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
                 <br>
-                <a th:href="'/register/del/'+ ${holdingRegister.id}+'/'+${device.id}"> Delete register</a>
+                <a th:href="'/holdingRegister/del/'+ ${holdingRegister.id}+'/'+${device.id}"> Delete register</a>
 
 
             </li>
@@ -46,9 +46,9 @@
         <ul th:each="inputRegister:${inputRegisters}">
             <li >
                 <h4   th:text="${inputRegister.name}+'------ id '+${inputRegister.id} + ', address:' + ${inputRegister.address}" ></h4>
-                <!--<button th:id="${inputRegister.id}" onclick="change('-')">-</button>--> <b th:id="${inputRegister.id}" name="register" ></b> <!--<button th:id="${inputRegister.id}" onclick="change('+')">+</button>-->
+                 <b th:id="${inputRegister.id}" name="register" ></b>
                 <br>
-                <a th:href="'/register/del/'+ ${inputRegister.id}+'/'+${device.id}"> Delete register</a>
+                <a th:href="'/inputRegister/del/'+ ${inputRegister.id}+'/'+${device.id}"> Delete register</a>
 
 
             </li>
@@ -59,7 +59,10 @@
         <br>
         <ul th:each="discreteRegister:${discreteRegisters}">
             <li >
-                <a th:href="'/registers/'+ ${discreteRegister.id}" th:text="${discreteRegister.address} + ':' + ${discreteRegister.value}" ></a>
+                <h4   th:text="${discreteRegister.name}+'------ id '+${discreteRegister.id} + ', address:' + ${discreteRegister.address}" ></h4>
+                <b th:id="${discreteRegister.id}" name="register" ></b>
+                <br>
+                <a th:href="'/discreteRegister/del/'+ ${discreteRegister.id}+'/'+${device.id}"> Delete register</a>
             </li>
         </ul>
         <button onclick=createRegister('createDiscreteRegister')>    Додайте адрес Discrete регістра
@@ -72,6 +75,7 @@
                 <a th:href="'/registers/'+ ${coilsRegister.id}" th:text="${coilsRegister.address} + ':' + ${coilsRegister.value}" ></a>
             </li>
         </ul>
+         <!--<b th:id="${coilsRegister.id}" name="register"></b>-->
         <button onclick=createRegister('createCoilsRegister')>Додайте адрес Coil регістра</button>
     </div>
 
