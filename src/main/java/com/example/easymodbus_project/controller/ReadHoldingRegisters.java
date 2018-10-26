@@ -25,7 +25,6 @@ public class ReadHoldingRegisters {
             try {
                 holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(address, 1);
                 System.out.println("HR address " + address +"; holding  na returni"  + holdRegisters[0]);
-
             } catch (ModbusException e) {
                 e.printStackTrace();
                 System.out.println("Modbus Exception to read HR");
