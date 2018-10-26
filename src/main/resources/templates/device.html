@@ -27,11 +27,11 @@
 <h3 style="text-align: center">Стан підключення: <b id="req"></b></h3>
 
 <div style="text-align: center">
-    <div id="divcreateHoldingRegister">
+    <div id="divcreateHoldingRegister" style="display: block; float: left; width: 25%"  >
         <ul th:each="holdingRegister:${holdingRegisters}">
             <li>
                 <h4   th:text="${holdingRegister.name}+'------ id '+${holdingRegister.id} + ', address:' + ${holdingRegister.address}" ></h4>
-                <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="holdingRegister" ></b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
+                <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="holdingRegister" >*C</b><b>*C</b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
                 <br>
                 <a th:href="'/holdingRegister/del/'+ ${holdingRegister.id}+'/'+${device.id}"> Delete register</a>
 
@@ -41,12 +41,12 @@
         <button onclick=createRegister('createHoldingRegister')>   Додайте адрес Holding регістра
         </button>
     </div>
-    <div id="divcreateInputRegister">
+    <div id="divcreateInputRegister" style="display: block; float: left; width: 25%">
 
         <ul th:each="inputRegister:${inputRegisters}">
             <li >
                 <h4   th:text="${inputRegister.name}+'------ id '+${inputRegister.id} + ', address:' + ${inputRegister.address}" ></h4>
-                 <b th:id="${inputRegister.id}" name="inputRegister" ></b>
+                 <b th:id="${inputRegister.id}" name="inputRegister" ></b><b>*C</b>
                 <br>
                 <a th:href="'/inputRegister/del/'+ ${inputRegister.id}+'/'+${device.id}"> Delete register</a>
 
@@ -55,7 +55,7 @@
         </ul>
         <button onclick=createRegister('createInputRegister')> Додайте адрес Input регістра</button>
     </div>
-    <div id="divcreateDiscreteRegister">
+    <div id="divcreateDiscreteRegister" style="display: block; float: left; width: 25%">
         <br>
         <ul th:each="discreteRegister:${discreteRegisters}">
             <li >
@@ -68,7 +68,7 @@
         <button onclick=createRegister('createDiscreteRegister')>    Додайте адрес Discrete регістра
         </button>
     </div>
-    <div id="divcreateCoilsRegister">
+    <div id="divcreateCoilsRegister" style="display: block; float: left; width: 25%">
         <br>
         <ul th:each="coilsRegister:${coilsRegisters}">
             <li >
@@ -165,8 +165,10 @@
             success: function (data) {
                 if(data===8888){
                    data =  element.innerText;
-                }
-                element.innerText = data;
+                   element.innerText = data;
+                }else {element.innerText = data;}
+
+
             }
 
         })
@@ -283,6 +285,8 @@
             let inputSubmit = document.createElement("input");
             inputSubmit.setAttribute("type", "submit");
             inputSubmit.setAttribute("id", idOfButton+"btn");
+
+            document.getElementById('div'+idOfButton).appendChild(document.createElement('br'));
             document.getElementById('div'+idOfButton).appendChild(input);
             document.getElementById('div'+idOfButton).appendChild(inputName);
             document.getElementById('div'+idOfButton).appendChild(inputSubmit);
@@ -310,6 +314,7 @@
         else if(document.getElementById("createCoilsRegister")!=null){
             document.getElementById("createCoilsRegister").remove();
             document.getElementById("createCoilsRegisterName").remove();
+            document.getElementById("createCoilsRegisterbtn").remove();
             createRegister(idOfButton);
         }
 
