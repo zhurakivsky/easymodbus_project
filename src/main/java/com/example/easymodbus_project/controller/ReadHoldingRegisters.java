@@ -8,10 +8,6 @@ public class ReadHoldingRegisters {
 
     private static int [] holdRegisters;
 
-
-
-
-
     public static int readHoldingRegisters(int address) {
         int valueOfRegister = 0;
 

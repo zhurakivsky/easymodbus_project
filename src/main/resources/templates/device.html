@@ -72,19 +72,15 @@
         <br>
         <ul th:each="coilsRegister:${coilsRegisters}">
             <li >
-                <a th:href="'/registers/'+ ${coilsRegister.id}" th:text="${coilsRegister.address} + ':' + ${coilsRegister.value}" ></a>
+                <h4 th:href="'/coilsRegister/'+ ${coilsRegister.id}" th:text="${coilsRegister.name} + ',id:' + ${coilsRegister.id} + 'address--'+ ${coilsRegister.address}" ></h4>
+                <b name="coilsRegister" th:id="${coilsRegister.id}"></b>
+
             </li>
         </ul>
-         <!--<b th:id="${coilsRegister.id}" name="coilsRegister"></b>-->
         <button onclick=createRegister('createCoilsRegister')>Додайте адрес Coil регістра</button>
     </div>
 
 
-    <!--<ul th:each="device:${devices}">-->
-        <!--<li >-->
-            <!--<a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>-->
-        <!--</li>-->
-    <!--</ul>-->
 
 </div>
 

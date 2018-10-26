@@ -1,5 +1,6 @@
 package com.example.easymodbus_project.controller;
 
+import com.example.easymodbus_project.model.CoilsRegister;
 import com.example.easymodbus_project.model.HoldingRegister;
 import com.example.easymodbus_project.model.InputRegister;
 import com.example.easymodbus_project.service.*;
@@ -53,6 +54,15 @@ public class RestConroller {
         int address = byId.getAddress();
 
         return ReadInputRegisters.readInputRegisters(address);
+    }
+    @GetMapping("/coilsRegister/{id}")
+    public boolean readCR(
+            @PathVariable int id){
+
+        CoilsRegister byId = coilsRegisterService.findById(id);
+        int address = byId.getAddress();
+
+        return ReadCoilsRegister.readCoilsRegister(address);
     }
 
 
