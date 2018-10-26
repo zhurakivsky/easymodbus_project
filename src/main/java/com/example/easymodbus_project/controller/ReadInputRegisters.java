@@ -7,12 +7,9 @@ import java.io.IOException;
 public class ReadInputRegisters {
 
 
-
-
     public static int readInputRegisters(int address) {
-        int[] values = new int[1];
-        int valueToReturn ;
-
+        int[] values;
+        int valueToReturn = 0;
 
 
         try {
@@ -25,22 +22,17 @@ public class ReadInputRegisters {
             try {
 
                 values = ModbusClientConnect.modbusClient.ReadInputRegisters(address, 1);
-                System.out.println("addres " + address+ ";input value   - -  " + values[0]);
+                System.out.println("address " + address + ";input value   - -  " + values[0]);
+                valueToReturn = values[0];
 
             } catch (ModbusException e) {
                 e.printStackTrace();
+                return 8888;
             } catch (IOException e) {
                 System.out.println("socket exception in IR");
-                try {
-                    ModbusClientConnect.modbusClient.Disconnect();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                readInputRegisters(address);
-            }
-            valueToReturn = values[0];
+                return 8888;
 
-            } else return 888;
+            }
             try {
                 ModbusClientConnect.modbusClient.Disconnect();
             } catch (IOException e) {
@@ -48,8 +40,9 @@ public class ReadInputRegisters {
             }
 
             return valueToReturn;
-        }
+        } else return 8888;
     }
+}
 
 
 

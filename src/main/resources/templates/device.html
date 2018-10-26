@@ -167,6 +167,9 @@
             type: "GET",
             url: "http://localhost:8080/"+ name + "/" + id ,
             success: function (data) {
+                if(data===8888){
+                   data =  element.innerText;
+                }
                 element.innerText = data;
             }
 
