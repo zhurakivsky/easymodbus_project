@@ -15,13 +15,13 @@ public class ReadHoldingRegisters {
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("NO CONNECTION");
+
             return 8888;
         }
         if (ModbusClientConnect.modbusClient.isConnected()) {
             try {
                 holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(address, 1);
-                System.out.println("HR address " + address +"; holding  na returni"  + holdRegisters[0]);
                 valueOfRegister = holdRegisters[0];
             } catch (ModbusException e) {
                 e.printStackTrace();

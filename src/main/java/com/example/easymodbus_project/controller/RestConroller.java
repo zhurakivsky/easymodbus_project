@@ -1,9 +1,6 @@
 package com.example.easymodbus_project.controller;
 
-import com.example.easymodbus_project.model.CoilsRegister;
-import com.example.easymodbus_project.model.DiscreteRegister;
 import com.example.easymodbus_project.model.HoldingRegister;
-import com.example.easymodbus_project.model.InputRegister;
 import com.example.easymodbus_project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +30,14 @@ public class RestConroller {
        WriteHoldingRegisters.writeHoldingRegisters(byId.getAddress(),value);
        return value;
     }
+    @PutMapping("/write/coilsRegister/{id}/{value}")
+    public boolean writeSingleCoils(
+            @PathVariable int id,
+            @PathVariable Boolean value){
+
+        WriteCoilsRegister.writeCoilsRegister(coilsRegisterService.findById(id).getAddress(),!value);
+        return !value;
+    }
 
 
     @GetMapping("/request")
@@ -48,15 +53,16 @@ public class RestConroller {
     @GetMapping("/inputRegister/{id}")
     public int readIR(
             @PathVariable int id){
+
         return ReadInputRegisters.readInputRegisters(inputRegisterService.findById(id).getAddress());
     }
     @GetMapping("/coilsRegister/{id}")
-    public boolean readCR(
+    public String readCR(
             @PathVariable int id){
         return ReadCoilsRegister.readCoilsRegister(coilsRegisterService.findById(id).getAddress());
     }
     @GetMapping("/discreteRegister/{id}")
-    public boolean readDR(
+    public String readDR(
             @PathVariable int id){
         return ReadDiscreteRegisters.readDiscreteRegister(discreteRegisterService.findById(id).getAddress());
     }

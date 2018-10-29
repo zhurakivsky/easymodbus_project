@@ -8,13 +8,14 @@ public class ReadCoilsRegister {
 
 
 
-    public static boolean readCoilsRegister(int address){
-        boolean valueToReturn = false;
+    public static String readCoilsRegister(int address){
+        String valueToReturn = "error";
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("NO CONNECTION");
+
+            return "error";
         }
 
         if(ModbusClientConnect.modbusClient.isConnected()){
@@ -22,13 +23,13 @@ public class ReadCoilsRegister {
 
             try {
                 boolean[] arr = ModbusClientConnect.modbusClient.ReadCoils(address,1);
-                valueToReturn = arr[0];
-                System.out.println("address coils" + address+ "valuee" + valueToReturn);
+                valueToReturn = "" + arr[0];
             } catch (ModbusException e) {
                 e.printStackTrace();
+                return valueToReturn;
             } catch (IOException e) {
                 System.out.println("Socket exc in Coils");
-                return false;
+                return valueToReturn;
             }
 
 

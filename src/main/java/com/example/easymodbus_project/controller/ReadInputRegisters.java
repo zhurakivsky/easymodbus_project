@@ -9,20 +9,21 @@ public class ReadInputRegisters {
 
     public static int readInputRegisters(int address) {
         int[] values;
-        int valueToReturn = 0;
+        int valueToReturn = 8888;
 
 
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("NO CONNECTION");
+
+            return valueToReturn;
         }
 
         if (ModbusClientConnect.modbusClient.isConnected()) {
             try {
 
                 values = ModbusClientConnect.modbusClient.ReadInputRegisters(address, 1);
-                System.out.println("address " + address + ";input value   - -  " + values[0]);
                 valueToReturn = values[0];
 
             } catch (ModbusException e) {

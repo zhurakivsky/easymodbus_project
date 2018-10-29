@@ -8,29 +8,30 @@ public class ReadDiscreteRegisters {
 
 
 
-    public static boolean readDiscreteRegister(int address){
-        boolean valuerToReturn ;
+    public static String readDiscreteRegister(int address){
+        String valuerToReturn = "error" ;
 
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("NO CONNECTION");
+
+            return valuerToReturn;
         }
         if(ModbusClientConnect.modbusClient.isConnected()){
             try {
                 boolean[] values = ModbusClientConnect.modbusClient.ReadDiscreteInputs(address, 1);
-                valuerToReturn = values[0];
+                valuerToReturn = "" + values[0];
             } catch (ModbusException e) {
                 e.printStackTrace();
-                return false;
+                return valuerToReturn;
             } catch (IOException e) {
                 System.out.println("Socket exc in DR");
-                return false;
+                return valuerToReturn;
             }
 
 
-        }else return false;
+        }else readDiscreteRegister(address);
 
         return valuerToReturn;
     }

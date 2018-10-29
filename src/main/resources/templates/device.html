@@ -73,7 +73,9 @@
         <ul th:each="coilsRegister:${coilsRegisters}">
             <li >
                 <h4 th:href="'/coilsRegister/'+ ${coilsRegister.id}" th:text="${coilsRegister.name} + ',id:' + ${coilsRegister.id} + 'address--'+ ${coilsRegister.address}" ></h4>
-                <b name="coilsRegister" th:id="${coilsRegister.id}"></b>
+                <button onclick="toChange()" name="coilsRegister" th:id="${coilsRegister.id}"></button>
+                <br>
+                <a th:href="'/coilsRegister/del/'+ ${coilsRegister.id}+'/'+${device.id}"> Delete register</a>
 
             </li>
         </ul>
@@ -86,6 +88,27 @@
 
 
 <script th:inline="javascript">
+
+
+    function toChange() {
+        let id = event.target.id;
+        let element = event.target;
+        let innerText = element.innerText;
+        $.ajax({
+            type:'PUT',
+            url: 'http://localhost:8080/write/coilsRegister/' +id + '/' + innerText,
+            success: function (data) {
+
+                element.innerText = data;
+            }
+        })
+
+
+
+
+
+
+    }
     function change( znak ) {
         let elementsByName = document.getElementsByName('holdingRegister');
         let id = event.target.id;
@@ -157,13 +180,13 @@
 
             }
 
-    },3000);
+    },2000);
     function listener( element, id, name ) {
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/"+ name + "/" + id ,
             success: function (data) {
-                if(data===8888){
+                if(data===8888 || data==='error'){
                    data =  element.innerText;
                    element.innerText = data;
                 }else {element.innerText = data;}

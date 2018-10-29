@@ -24,7 +24,7 @@ public class ModbusClientConnect{
             isconnect = modbusClient.isConnected();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("NO CONNECTION");
         }
 
 
