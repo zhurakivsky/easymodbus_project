@@ -24,6 +24,7 @@ public class CoilsRegister {
     private boolean value;
     private String name;
 
+
     @ManyToOne(
 //            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY

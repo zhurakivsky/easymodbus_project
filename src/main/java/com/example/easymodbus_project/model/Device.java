@@ -23,6 +23,10 @@ public class Device {
     private String name;
     private String ipAddress;
     private int port;
+    private int quantityHR;
+    private int quantityCR;
+    private int quantityIR;
+    private int quantityDR;
 
 
 

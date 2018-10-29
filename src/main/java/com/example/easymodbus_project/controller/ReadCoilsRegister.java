@@ -8,7 +8,7 @@ public class ReadCoilsRegister {
 
 
 
-    public static String readCoilsRegister(int address){
+    public static String readCoilsRegister(){
         String valueToReturn = "error";
         try {
             ModbusClientConnect.modbusClient.Connect();
@@ -22,7 +22,7 @@ public class ReadCoilsRegister {
 
 
             try {
-                boolean[] arr = ModbusClientConnect.modbusClient.ReadCoils(address,1);
+                boolean[] arr = ModbusClientConnect.modbusClient.ReadCoils(0,100);
                 valueToReturn = "" + arr[0];
             } catch (ModbusException e) {
                 e.printStackTrace();

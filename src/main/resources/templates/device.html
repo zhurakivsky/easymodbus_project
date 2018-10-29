@@ -137,59 +137,59 @@
 
     }
 
-    setInterval( function () {
-        let elementsByName;
-        elementsByName = document.getElementsByName('holdingRegister');
-            for(let i = 0; i<elementsByName.length; i++) {
-            let element = elementsByName[i];
-            let id = elementsByName[i].id;
-
-            listener(element, id,'holdingRegister');
-
-            }
-
-
-         elementsByName = document.getElementsByName('inputRegister');
-            for(let i = 0; i<elementsByName.length; i++) {
-                let element = elementsByName[i];
-                let id = elementsByName[i].id;
-
-                listener(element, id,'inputRegister');
-
-            }
-         elementsByName = document.getElementsByName('discreteRegister');
-            for(let i = 0; i<elementsByName.length; i++) {
-                let element = elementsByName[i];
-                let id = elementsByName[i].id;
-
-                listener(element, id,'discreteRegister');
-
-            }
-            elementsByName = document.getElementsByName('coilsRegister');
-            for(let i = 0; i<elementsByName.length; i++) {
-                let element = elementsByName[i];
-                let id = elementsByName[i].id;
-
-                listener(element, id,'coilsRegister');
-
-            }
-
-    },2000);
-    function listener( element, id, name ) {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/"+ name + "/" + id ,
-            success: function (data) {
-                if(data===8888 || data==='error'){
-                   data =  element.innerText;
-                   element.innerText = data;
-                }else {element.innerText = data;}
-
-
-            }
-
-        })
-    }
+    // setInterval( function () {
+    //     let elementsByName;
+    //     elementsByName = document.getElementsByName('holdingRegister');
+    //         for(let i = 0; i<elementsByName.length; i++) {
+    //         let element = elementsByName[i];
+    //         let id = elementsByName[i].id;
+    //
+    //         listener(element, id,'holdingRegister');
+    //
+    //         }
+    //
+    //
+    //      elementsByName = document.getElementsByName('inputRegister');
+    //         for(let i = 0; i<elementsByName.length; i++) {
+    //             let element = elementsByName[i];
+    //             let id = elementsByName[i].id;
+    //
+    //             listener(element, id,'inputRegister');
+    //
+    //         }
+    //      elementsByName = document.getElementsByName('discreteRegister');
+    //         for(let i = 0; i<elementsByName.length; i++) {
+    //             let element = elementsByName[i];
+    //             let id = elementsByName[i].id;
+    //
+    //             listener(element, id,'discreteRegister');
+    //
+    //         }
+    //         elementsByName = document.getElementsByName('coilsRegister');
+    //         for(let i = 0; i<elementsByName.length; i++) {
+    //             let element = elementsByName[i];
+    //             let id = elementsByName[i].id;
+    //
+    //             listener(element, id,'coilsRegister');
+    //
+    //         }
+    //
+    // },2000);
+    // function listener( element, id, name ) {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/"+ name + "/" + id ,
+    //         success: function (data) {
+    //             if(data===8888 || data==='error'){
+    //                data =  element.innerText;
+    //                element.innerText = data;
+    //             }else {element.innerText = data;}
+    //
+    //
+    //         }
+    //
+    //     })
+    // }
 
     function edit(idOfButton) {
 
