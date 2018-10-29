@@ -1,38 +1,57 @@
 package com.example.easymodbus_project.controller;
 
 import de.re.easymodbus.exceptions.ModbusException;
+import lombok.ToString;
 
 import java.io.IOException;
 
+@ToString
+
 public class ReadHoldingRegisters {
 
-    private static int [] holdRegisters;
+    static int [] holdingRegisters ;
 
-    public static int readHoldingRegisters(int address) {
-        int valueOfRegister ;
+    public static void readHoldingRegisters(int quantity) {
 
 
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            System.out.println("NO CONNECTION");
-
-            return 8888;
+            e.printStackTrace();
         }
-        if (ModbusClientConnect.modbusClient.isConnected()) {
+
+
+        while (ModbusClientConnect.modbusClient.isConnected()) {
             try {
-                holdRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(address, 1);
-                valueOfRegister = holdRegisters[0];
+                holdingRegisters = ModbusClientConnect.modbusClient.ReadHoldingRegisters(0, quantity);
+
             } catch (ModbusException e) {
                 e.printStackTrace();
                 System.out.println("Modbus Exception to read HR");
-                return 8888;
             } catch (IOException e) {
                 System.out.println(" Socket Exception in HR");
-                return 8888;
+                try {
+                    ModbusClientConnect.modbusClient.Disconnect();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                readHoldingRegisters(quantity);
             }
-        }else return 8888;
 
+
+            try {
+                System.out.println(holdingRegisters.length);
+            } catch (NullPointerException e) {
+                System.out.println("error null");
+                try {
+                    ModbusClientConnect.modbusClient.Disconnect();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+
+
+                }
+                readHoldingRegisters(quantity);
+            }
 
 
             try {
@@ -41,7 +60,7 @@ public class ReadHoldingRegisters {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-    return valueOfRegister;}
+        }
+    }
 
 }

@@ -9,6 +9,11 @@ public class WriteCoilsRegister {
 
     public  static  void writeCoilsRegister(int address, boolean value){
 
+        try {
+            ModbusClientConnect.modbusClient.Disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             ModbusClientConnect.modbusClient.Connect();
@@ -19,6 +24,11 @@ public class WriteCoilsRegister {
         try {
             ModbusClientConnect.modbusClient.WriteSingleCoil(address,value);
         } catch (ModbusException | IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            ModbusClientConnect.modbusClient.Disconnect();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

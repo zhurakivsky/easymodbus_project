@@ -75,10 +75,16 @@ public class MainController {
     public String addDevice(
             @RequestParam String name,
             @RequestParam String ipAddress,
-            @RequestParam int port){
+            @RequestParam int port,
+            @RequestParam int quantityHR,
+            @RequestParam int quantityCR,
+            @RequestParam int quantityDR,
+            @RequestParam int quantityIR
+    ){
 
         System.out.println(name);
-        Device device = Device.builder().ipAddress(ipAddress).name(name).port(port).build();
+        Device device = Device.builder().ipAddress(ipAddress).name(name).port(port).quantityCR(quantityCR)
+                .quantityDR(quantityDR).quantityHR(quantityHR).quantityIR(quantityIR).build();
 
         System.out.println(device.getName());
         deviceService.save(device);
@@ -122,6 +128,46 @@ public class MainController {
         return "redirect:/";
 
 
+    }
+    @PostMapping("/setQuantityHR")
+    public String setQuantityHR(
+            @RequestBody Device device){
+
+        Device  dev = deviceService.findById(device.getId());
+        dev.setQuantityHR(device.getQuantityHR());
+        deviceService.save(dev);
+
+        return "redirect:/";
+    }@PostMapping("/setQuantityCR")
+    public String setQuantityCR(
+            @RequestBody Device device){
+
+        Device  dev = deviceService.findById(device.getId());
+        dev.setQuantityCR(device.getQuantityCR());
+        deviceService.save(dev);
+
+
+        return "redirect:/";
+    }@PostMapping("/setQuantityIR")
+    public String setQuantityIR(
+            @RequestBody Device device){
+
+        Device  dev = deviceService.findById(device.getId());
+        dev.setQuantityIR(device.getQuantityIR());
+        deviceService.save(dev);
+
+
+        return "redirect:/";
+    }@PostMapping("/setQuantityDR")
+    public String setQuantityDR(
+            @RequestBody Device device){
+
+        Device  dev = deviceService.findById(device.getId());
+        dev.setQuantityDR(device.getQuantityDR());
+        deviceService.save(dev);
+
+
+        return "redirect:/";
     }
 
     @GetMapping("/holdingRegister/del/{id}/{device_id}")

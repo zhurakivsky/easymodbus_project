@@ -1,39 +1,65 @@
 package com.example.easymodbus_project.controller;
 
 import de.re.easymodbus.exceptions.ModbusException;
+import lombok.ToString;
 
 import java.io.IOException;
+
+@ToString
 
 public class ReadCoilsRegister {
 
 
 
-    public static String readCoilsRegister(){
-        String valueToReturn = "error";
+
+    static boolean[] coilRegisters;
+
+    public static void readCoilsRegister(int quantity) {
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            System.out.println("NO CONNECTION");
-
-            return "error";
+            e.printStackTrace();
         }
 
-        if(ModbusClientConnect.modbusClient.isConnected()){
+
+        while (ModbusClientConnect.modbusClient.isConnected()) {
 
 
             try {
-                boolean[] arr = ModbusClientConnect.modbusClient.ReadCoils(0,100);
-                valueToReturn = "" + arr[0];
+                coilRegisters = ModbusClientConnect.modbusClient.ReadCoils(0, quantity);
+
             } catch (ModbusException e) {
                 e.printStackTrace();
-                return valueToReturn;
             } catch (IOException e) {
                 System.out.println("Socket exc in Coils");
-                return valueToReturn;
+                try {
+                    ModbusClientConnect.modbusClient.Disconnect();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                readCoilsRegister(quantity);
             }
 
 
-        } else readCoilsRegister(address);
-        return valueToReturn;
+            try {
+                System.out.println(coilRegisters.length);
+            } catch (NullPointerException e) {
+                System.out.println("error null");
+                try {
+                    ModbusClientConnect.modbusClient.Disconnect();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+
+
+                }
+                readCoilsRegister(quantity);
+            }
+
+            try {
+                ModbusClientConnect.modbusClient.Disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -10,6 +10,11 @@ public class WriteHoldingRegisters {
 
 
     public static void writeHoldingRegisters(int startingAddress, int value){
+        try {
+            ModbusClientConnect.modbusClient.Disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             ModbusClientConnect.modbusClient.Connect();
@@ -21,8 +26,14 @@ public class WriteHoldingRegisters {
             ModbusClientConnect.modbusClient.WriteSingleRegister(startingAddress,value);
         } catch (ModbusException | IOException e) {
             e.printStackTrace();
+
         }
 
+        try {
+            ModbusClientConnect.modbusClient.Disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

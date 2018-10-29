@@ -17,11 +17,24 @@
     <h1 th:text="${device.name}"  ></h1>
     <h2 th:text="'ipAddress = ' + ${device.ipAddress}" ></h2>
     <h2 th:text="'port = '+ ${device.port} " ></h2>
+    <h4 th:text="'quantityHR = '+ ${device.quantityHR} " ></h4>
+    <h4 th:text="'quantityCR = '+ ${device.quantityCR} " ></h4>
+    <h4 th:text="'quantityDR = '+ ${device.quantityDR} " ></h4>
+    <h4 th:text="'quantityIR = '+ ${device.quantityIR} " ></h4>
+
     <div id="editDevice" >
         <a th:href="'/device/del/'+ ${device.id}"><button>  Видалити </button></a>
         <button onclick="edit('rename')" >  Rename </button>
         <button onclick="edit('ip')" >  Change IP Address </button>
         <button onclick="edit('port')" >  Change Port  </button><br>
+        <button onclick="edit('quantityHR')" > Change quantityHR  </button>
+        <button onclick="edit('quantityCR')" > Change quantityCR  </button>
+        <button onclick="edit('quantityDR')" > Change quantityDR  </button>
+        <button onclick="edit('quantityIR')" > Change quantityIR  </button>
+
+
+
+
     </div>
 </div>
 <h3 style="text-align: center">Стан підключення: <b id="req"></b></h3>
@@ -137,65 +150,67 @@
 
     }
 
-    // setInterval( function () {
-    //     let elementsByName;
-    //     elementsByName = document.getElementsByName('holdingRegister');
-    //         for(let i = 0; i<elementsByName.length; i++) {
-    //         let element = elementsByName[i];
-    //         let id = elementsByName[i].id;
-    //
-    //         listener(element, id,'holdingRegister');
-    //
-    //         }
-    //
-    //
-    //      elementsByName = document.getElementsByName('inputRegister');
-    //         for(let i = 0; i<elementsByName.length; i++) {
-    //             let element = elementsByName[i];
-    //             let id = elementsByName[i].id;
-    //
-    //             listener(element, id,'inputRegister');
-    //
-    //         }
-    //      elementsByName = document.getElementsByName('discreteRegister');
-    //         for(let i = 0; i<elementsByName.length; i++) {
-    //             let element = elementsByName[i];
-    //             let id = elementsByName[i].id;
-    //
-    //             listener(element, id,'discreteRegister');
-    //
-    //         }
-    //         elementsByName = document.getElementsByName('coilsRegister');
-    //         for(let i = 0; i<elementsByName.length; i++) {
-    //             let element = elementsByName[i];
-    //             let id = elementsByName[i].id;
-    //
-    //             listener(element, id,'coilsRegister');
-    //
-    //         }
-    //
-    // },2000);
-    // function listener( element, id, name ) {
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "http://localhost:8080/"+ name + "/" + id ,
-    //         success: function (data) {
-    //             if(data===8888 || data==='error'){
-    //                data =  element.innerText;
-    //                element.innerText = data;
-    //             }else {element.innerText = data;}
-    //
-    //
-    //         }
-    //
-    //     })
-    // }
+    setInterval( function () {
+        let elementsByName;
+        elementsByName = document.getElementsByName('holdingRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+            let element = elementsByName[i];
+            let id = elementsByName[i].id;
+
+            listener(element, id,'holdingRegister');
+
+            }
+
+
+         elementsByName = document.getElementsByName('inputRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+                let element = elementsByName[i];
+                let id = elementsByName[i].id;
+
+                listener(element, id,'inputRegister');
+
+            }
+         elementsByName = document.getElementsByName('discreteRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+                let element = elementsByName[i];
+                let id = elementsByName[i].id;
+
+                listener(element, id,'discreteRegister');
+
+            }
+            elementsByName = document.getElementsByName('coilsRegister');
+            for(let i = 0; i<elementsByName.length; i++) {
+                let element = elementsByName[i];
+                let id = elementsByName[i].id;
+
+                listener(element, id,'coilsRegister');
+
+            }
+
+    },2000);
+    function listener( element, id, name ) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/"+ name + "/" + id ,
+            success: function (data) {
+                 element.innerText = data;
+
+
+            }
+
+        })
+    }
 
     function edit(idOfButton) {
 
         if(document.getElementById("rename")==null
             && document.getElementById("ip")==null
-            && document.getElementById("port")==null) {
+            && document.getElementById("port")==null
+            && document.getElementById("quantityHR")==null
+            && document.getElementById("quantityCR")==null
+            && document.getElementById("quantityDR")==null
+            && document.getElementById("quantityIR")==null
+        ) {
             let input = document.createElement("input");
             input.setAttribute("type", "text");
             input.setAttribute("id", idOfButton);
@@ -217,6 +232,22 @@
         }else if(document.getElementById("port")!=null){
             document.getElementById("port").remove();
             document.getElementById("portbtn").remove();
+            edit(idOfButton);
+        }else if(document.getElementById("quantityHR")!=null){
+            document.getElementById("quantityHR").remove();
+            document.getElementById("quantityHRbtn").remove();
+            edit(idOfButton);
+        }else if(document.getElementById("quantityCR")!=null){
+            document.getElementById("quantityCR").remove();
+            document.getElementById("quantityCRbtn").remove();
+            edit(idOfButton);
+        }else if(document.getElementById("quantityDR")!=null){
+            document.getElementById("quantityDR").remove();
+            document.getElementById("quantityDRbtn").remove();
+            edit(idOfButton);
+        }else if(document.getElementById("quantityIR")!=null){
+            document.getElementById("quantityIR").remove();
+            document.getElementById("quantityIRbtn").remove();
             edit(idOfButton);
         }
         let $idOfButton = $('#'+idOfButton+'btn');
@@ -268,6 +299,90 @@
                 deviceData = JSON.stringify({id, port});
                 $.ajax({
                     url: 'http://localhost:8080/setPort',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    success: function () {
+                        document.location.reload(true);
+                    }
+
+
+
+
+
+                })
+
+            }else if(idOfButton ==="quantityHR") {
+                let $name = $('#' + idOfButton);
+                let quantityHR = $name.val();
+                $name.val('');
+
+                deviceData = JSON.stringify({id, quantityHR});
+                $.ajax({
+                    url: 'http://localhost:8080/setQuantityHR',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    success: function () {
+                        document.location.reload(true);
+                    }
+
+
+
+
+
+                })
+
+            }else if(idOfButton ==="quantityCR") {
+                let $name = $('#' + idOfButton);
+                let quantityCR = $name.val();
+                $name.val('');
+
+                deviceData = JSON.stringify({id, quantityCR});
+                $.ajax({
+                    url: 'http://localhost:8080/setQuantityCR',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    success: function () {
+                        document.location.reload(true);
+                    }
+
+
+
+
+
+                })
+
+            }else if(idOfButton ==="quantityIR") {
+                let $name = $('#' + idOfButton);
+                let quantityIR = $name.val();
+                $name.val('');
+
+                deviceData = JSON.stringify({id, quantityIR});
+                $.ajax({
+                    url: 'http://localhost:8080/setQuantityIR',
+                    type: 'POST',
+                    data: deviceData,
+                    contentType: 'application/json',
+                    success: function () {
+                        document.location.reload(true);
+                    }
+
+
+
+
+
+                })
+
+            }else if(idOfButton ==="quantityDR") {
+                let $name = $('#' + idOfButton);
+                let quantityDR = $name.val();
+                $name.val('');
+
+                deviceData = JSON.stringify({id, quantityDR});
+                $.ajax({
+                    url: 'http://localhost:8080/setQuantityDR',
                     type: 'POST',
                     data: deviceData,
                     contentType: 'application/json',
@@ -367,10 +482,11 @@
     }
 
     setInterval(function req() {
+        let id = [[${device.id}]];
         let elementReq = document.getElementById('req');
         $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/request",
+                url: "http://localhost:8080/request/"+id,
                 success: function (data) {
                     if(data === true){elementReq.style.setProperty('color','green');}
                     else{elementReq.style.setProperty('color','red');}

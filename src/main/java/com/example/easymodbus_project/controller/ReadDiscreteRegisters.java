@@ -1,39 +1,62 @@
 package com.example.easymodbus_project.controller;
 
+import com.example.easymodbus_project.model.Device;
 import de.re.easymodbus.exceptions.ModbusException;
+import lombok.ToString;
 
 import java.io.IOException;
+
+@ToString
 
 public class ReadDiscreteRegisters {
 
 
+     static boolean[] discreteRegisters;
 
-    public static String readDiscreteRegister(int address){
-        String valuerToReturn = "error" ;
-
+    public static void readDiscreteRegister(int quantity) {
         try {
             ModbusClientConnect.modbusClient.Connect();
         } catch (IOException e) {
-            System.out.println("NO CONNECTION");
-
-            return valuerToReturn;
+            e.printStackTrace();
         }
-        if(ModbusClientConnect.modbusClient.isConnected()){
+
+
+        while (ModbusClientConnect.modbusClient.isConnected()) {
             try {
-                boolean[] values = ModbusClientConnect.modbusClient.ReadDiscreteInputs(address, 1);
-                valuerToReturn = "" + values[0];
+                discreteRegisters = ModbusClientConnect.modbusClient.ReadDiscreteInputs(0, quantity);
             } catch (ModbusException e) {
                 e.printStackTrace();
-                return valuerToReturn;
             } catch (IOException e) {
                 System.out.println("Socket exc in DR");
-                return valuerToReturn;
+                try {
+                    ModbusClientConnect.modbusClient.Disconnect();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                readDiscreteRegister(quantity);
             }
 
 
-        }else readDiscreteRegister(address);
+            try {
+                System.out.println(discreteRegisters.length);
+            } catch (NullPointerException e) {
+                System.out.println("error null");
+                try {
+                    ModbusClientConnect.modbusClient.Disconnect();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
 
-        return valuerToReturn;
+
+                }
+                readDiscreteRegister(quantity);
+            }
+            try {
+                ModbusClientConnect.modbusClient.Disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 }

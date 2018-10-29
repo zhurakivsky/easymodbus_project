@@ -1,9 +1,11 @@
 package com.example.easymodbus_project.controller;
 
-import com.example.easymodbus_project.model.HoldingRegister;
+import com.example.easymodbus_project.model.*;
 import com.example.easymodbus_project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -40,31 +42,54 @@ public class RestConroller {
     }
 
 
-    @GetMapping("/request")
-    public boolean req(){
+
+    @GetMapping("/request/{id}")
+    public boolean request(
+            @PathVariable int id
+    ){
+        Device byId = deviceService.findById(id);
         ModbusClientConnect modbusClientConnect = new ModbusClientConnect();
+        ReadHoldingRegisters.readHoldingRegisters(byId.getQuantityHR());
+        ReadCoilsRegister.readCoilsRegister(byId.getQuantityCR());
+        ReadDiscreteRegisters.readDiscreteRegister(byId.getQuantityDR());
+        ReadInputRegisters.readInputRegisters(byId.getQuantityIR());
+
+//        for (int holdingRegister : ReadHoldingRegisters.holdingRegisters) {
+//            System.out.println(holdingRegister);
+//        }
+
         return modbusClientConnect.isconnect;
     }
     @GetMapping("/holdingRegister/{id}")
     public int readHR(
         @PathVariable int id){
-        return ReadHoldingRegisters.readHoldingRegisters(holdingRegisterService.findById(id).getAddress());
+
+
+        HoldingRegister byId = holdingRegisterService.findById(id);
+
+        return ReadHoldingRegisters.holdingRegisters[byId.getAddress()];
     }
     @GetMapping("/inputRegister/{id}")
     public int readIR(
             @PathVariable int id){
 
-        return ReadInputRegisters.readInputRegisters(inputRegisterService.findById(id).getAddress());
+        InputRegister byId = inputRegisterService.findById(id);
+
+        return ReadInputRegisters.inputRegisters[byId.getAddress()];
     }
     @GetMapping("/coilsRegister/{id}")
-    public String readCR(
+    public boolean readCR(
             @PathVariable int id){
-        return ReadCoilsRegister.readCoilsRegister(coilsRegisterService.findById(id).getAddress());
+        CoilsRegister byId = coilsRegisterService.findById(id);
+
+        return ReadCoilsRegister.coilRegisters[byId.getAddress()];
     }
     @GetMapping("/discreteRegister/{id}")
-    public String readDR(
+    public boolean readDR(
             @PathVariable int id){
-        return ReadDiscreteRegisters.readDiscreteRegister(discreteRegisterService.findById(id).getAddress());
+        DiscreteRegister byId = discreteRegisterService.findById(id);
+
+        return ReadDiscreteRegisters.discreteRegisters[byId.getAddress()];
     }
 
 
