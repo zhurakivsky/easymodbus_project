@@ -18,7 +18,8 @@ public class HoldingRegister {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int address;
-    private int value;
+    private int minVal ;
+    private int maxVal ;
     private String name;
 
     @ManyToOne(

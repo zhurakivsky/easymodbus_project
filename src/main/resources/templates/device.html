@@ -47,6 +47,7 @@
                 <button th:id="${holdingRegister.id}" onclick="change('-')">-</button> <b th:id="${holdingRegister.id}" name="holdingRegister" >*C</b><b>*C</b> <button th:id="${holdingRegister.id}" onclick="change('+')">+</button>
                 <br>
                 <a th:href="'/holdingRegister/del/'+ ${holdingRegister.id}+'/'+${device.id}"> Delete register</a>
+                <!--<a th:href="'/holdingRegister/changeInfo/'+ ${holdingRegister.id}+'/'+${device.id}"> Change Info of Register</a>-->
 
 
             </li>
@@ -62,6 +63,7 @@
                  <b th:id="${inputRegister.id}" name="inputRegister" ></b><b>*C</b>
                 <br>
                 <a th:href="'/inputRegister/del/'+ ${inputRegister.id}+'/'+${device.id}"> Delete register</a>
+                <!--<a th:href="'/holdingRegister/changeInfo/'+ ${holdingRegister.id}+'/'+${device.id}"> Change Info of Register</a>-->
 
 
             </li>
@@ -76,6 +78,8 @@
                 <b th:id="${discreteRegister.id}" name="discreteRegister" ></b>
                 <br>
                 <a th:href="'/discreteRegister/del/'+ ${discreteRegister.id}+'/'+${device.id}"> Delete register</a>
+                <!--<a th:href="'/holdingRegister/changeInfo/'+ ${holdingRegister.id}+'/'+${device.id}"> Change Info of Register</a>-->
+
             </li>
         </ul>
         <button onclick=createRegister('createDiscreteRegister')>    Додайте адрес Discrete регістра
@@ -89,15 +93,16 @@
                 <button onclick="toChange()" name="coilsRegister" th:id="${coilsRegister.id}"></button>
                 <br>
                 <a th:href="'/coilsRegister/del/'+ ${coilsRegister.id}+'/'+${device.id}"> Delete register</a>
+                <!--<a th:href="'/holdingRegister/changeInfo/'+ ${holdingRegister.id}+'/'+${device.id}"> Change Info of Register</a>-->
 
             </li>
         </ul>
         <button onclick=createRegister('createCoilsRegister')>Додайте адрес Coil регістра</button>
     </div>
-
-
-
 </div>
+
+
+
 
 
 <script th:inline="javascript">
@@ -414,13 +419,26 @@
             inputName.setAttribute("type", "text");
             inputName.setAttribute("id", idOfButton+"Name");
             inputName.setAttribute("placeholder", "name of address");
+            document.getElementById('div'+idOfButton).appendChild(input);
+            document.getElementById('div'+idOfButton).appendChild(inputName);
+                if(idOfButton==='createHoldingRegister'){
+                    let minVal = document.createElement("input");
+                    minVal.setAttribute("type", "text");
+                    minVal.setAttribute("id", idOfButton+"_minVal");
+                    minVal.setAttribute("placeholder", "min value of HR");
+                    let maxVal = document.createElement("input");
+                    maxVal.setAttribute("type", "text");
+                    maxVal.setAttribute("id", idOfButton+"_maxVal");
+                    maxVal.setAttribute("placeholder", "max value of HR");
+                    document.getElementById('div'+idOfButton).appendChild(document.createElement('br'));
+                    document.getElementById('div'+idOfButton).appendChild(minVal);
+                    document.getElementById('div'+idOfButton).appendChild(maxVal);
+
+                }
             let inputSubmit = document.createElement("input");
             inputSubmit.setAttribute("type", "submit");
             inputSubmit.setAttribute("id", idOfButton+"btn");
-
             document.getElementById('div'+idOfButton).appendChild(document.createElement('br'));
-            document.getElementById('div'+idOfButton).appendChild(input);
-            document.getElementById('div'+idOfButton).appendChild(inputName);
             document.getElementById('div'+idOfButton).appendChild(inputSubmit);
 
         }
@@ -428,6 +446,8 @@
             document.getElementById("createHoldingRegister").remove();
             document.getElementById("createHoldingRegisterbtn").remove();
             document.getElementById("createHoldingRegisterName").remove();
+            document.getElementById("createHoldingRegister_minVal").remove();
+            document.getElementById("createHoldingRegister_maxVal").remove();
             createRegister(idOfButton);
         }
         else if(document.getElementById("createInputRegister")!=null){
@@ -461,6 +481,15 @@
             let name = $name.val();
             $name.val('');
             addressData = JSON.stringify({address, name});
+            if(idOfButton==='createHoldingRegister'){
+                let $minVal =$('#' + idOfButton + '_minVal');
+                let $maxVal =$('#' + idOfButton + '_maxVal');
+                let minVal = $minVal.val();
+                let maxVal = $maxVal.val();
+                $minVal.val('');
+                $maxVal.val('');
+                addressData = JSON.stringify({address, name, minVal, maxVal})
+            }
             let url ;
             if(idOfButton ==="createHoldingRegister"){url = 'http://localhost:8080/device/createHR/'+id}
             else if (idOfButton ==="createInputRegister"){url = 'http://localhost:8080/device/createIR/'+id}
