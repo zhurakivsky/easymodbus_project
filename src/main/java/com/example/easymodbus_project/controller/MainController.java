@@ -247,4 +247,62 @@ public class MainController {
         return "redirect:/";
     }
 
+
+    @PostMapping("/setChanges/coilsRegister")
+    public String setChange(
+            @RequestBody CoilsRegister coilsRegister
+    ){
+
+        String name = coilsRegister.getName();
+        int id = coilsRegister.getId();
+        CoilsRegister byId = coilsRegisterService.findById(id);
+        byId.setName(name);
+        coilsRegisterService.save(byId);
+        return "redirect:/";
+
     }
+    @PostMapping("/setChanges/discreteRegister")
+    public String  setChange(
+            @RequestBody DiscreteRegister discreteRegister
+    ){
+
+        String name = discreteRegister.getName();
+        int id = discreteRegister.getId();
+        DiscreteRegister byId = discreteRegisterService.findById(id);
+        byId.setName(name);
+        discreteRegisterService.save(byId);
+        return "redirect:/";
+
+    }
+
+    @PostMapping("/setChanges/inputRegister")
+    public String setChange(
+            @RequestBody InputRegister inputRegister
+    ){
+
+        String name = inputRegister.getName();
+        int id = inputRegister.getId();
+        InputRegister byId = inputRegisterService.findById(id);
+        byId.setName(name);
+        inputRegisterService.save(byId);
+        return "redirect:/";
+    }
+
+    @PostMapping("/setChanges/holdingRegister")
+    public String setChange(
+            @RequestBody HoldingRegister holdingRegister
+    ){
+
+        String name = holdingRegister.getName();
+        int maxVal = holdingRegister.getMaxVal();
+        int minVal = holdingRegister.getMinVal();
+        int id = holdingRegister.getId();
+        HoldingRegister byId = holdingRegisterService.findById(id);
+        byId.setName(name);
+        byId.setMaxVal(maxVal);
+        byId.setMinVal(minVal);
+        holdingRegisterService.save(byId);
+        return "redirect:/";
+
+    }
+}
