@@ -11,9 +11,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body>
-main
-
+<body class="bg-dark">
+<div class="bg-dark text-center text-white">
+    <div class="text-left" >
+        <a th:href="'/'"><button class =" btn btn-primary">  На головну </button></a>
+    </div>
 
 <form action="/addDevice" method="post">
     <input type="text"  name="name" placeholder=" name of new device" /><br>
@@ -24,9 +26,9 @@ main
     <input type="text" id="quantityDR" name="quantityDR" placeholder="quantityDR" /><br>
     <input type="text" id="quantityIR" name="quantityIR" placeholder="quantityIR" /><br>
 
-    <input type="submit">
+    <input class ="btn btn-primary" type="submit">
 </form>
-
+</div>
 <script>
 
 

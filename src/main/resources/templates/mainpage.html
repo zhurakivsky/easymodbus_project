@@ -11,18 +11,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head >
-<body>
-<button id = "createDevice"><a href="/createDevice">Add a device</a></button>
+<body class="bg-dark">
 
+
+    <a class=" btn btn-outline-success" href="/createDevice">Add a device</a>
+
+    <div class="text-center text-white">
 
 <ul th:each="device:${devices}">
     <li >
-        <a th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>
+        <a class =" btn btn-outline-light m-1" th:href="'/device/'+ ${device.id}" th:text="${device.name} + ':' + ${device.ipAddress}" ></a>
     </li>
 </ul>
 
 
-
+</div>
 
 <script>
 
